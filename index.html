@@ -1,46 +1,42 @@
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-      const revealTextElems = document.querySelectorAll('.reveal-text');
-      const revealImgElems = document.querySelectorAll('.reveal-img');
-
-      const options = {
-        threshold: 0.1
-      };
-
-      const observer = new IntersectionObserver((entries, observer) => {
-          entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                  const target = entry.target;
-                  target.classList.add('reveal');
-                  observer.unobserve(target);
-              }
-          });
-      }, options);
-
-      revealTextElems.forEach(elem => observer.observe(elem));
-      revealImgElems.forEach(elem => observer.observe(elem));
-
-      // Trigger reveal animations for elements already in viewport on page load
-      revealTextElems.forEach(elem => {
-          if (elem.getBoundingClientRect().top < window.innerHeight && elem.getBoundingClientRect().bottom > 0) {
-              elem.classList.add('reveal');
-          }
-      });
-      revealImgElems.forEach(elem => {
-          if (elem.getBoundingClientRect().top < window.innerHeight && elem.getBoundingClientRect().bottom > 0) {
-              elem.classList.add('reveal');
-          }
-      });
-  });
-</script>
-<style>
-    .reveal-text {
-        clip-path: inset(0 0 0 0);
-        transition: clip-path 0.5s ease;
-    }
-
-    .reveal-img {
-        clip-path: inset(0 0 0 0);
-        transition: clip-path 0.5s ease;
-    }
-</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <style>
+        /* Additional Styles */
+        .reveal-text {
+            /* Update styles for visibility */
+            clip-path: inset(0%);
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .reveal-img {
+            /* Update styles for visibility */
+            clip-path: inset(0%);
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="hero">
+            <div class="reveal-text">Welcome to My Portfolio</div>
+            <img class="reveal-img" src="image.jpg" alt="Hero Image">
+        </div>
+    </header>
+    <script>
+        window.addEventListener('load', function() {
+            const revealElements = document.querySelectorAll('.reveal-text, .reveal-img');
+            revealElements.forEach((el) => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom >= 0) {
+                    el.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
