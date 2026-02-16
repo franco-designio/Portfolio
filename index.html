@@ -3,40 +3,637 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
+    <title>Franco Aguilera | Human-Centered Designer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Fonts -->
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@200,300,400,500,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    
     <style>
-        /* Additional Styles */
+        /* --- CORE SETTINGS --- */
+        :root {
+            --orange: #FF4D00; /* International Orange */
+            --dark: #050505;
+            --grid-line: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Clash Grotesk', sans-serif;
+            background-color: var(--dark);
+            color: #e5e5e5;
+            overflow-x: hidden;
+            cursor: none; /* Hide default cursor */
+        }
+
+        h1, h2, h3, .serif { font-family: 'Instrument Serif', serif; }
+
+        /* --- CLAY/SLIME CURSOR --- */
+        #custom-cursor {
+            position: fixed;
+            top: 0; left: 0;
+            width: 20px; height: 20px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            mix-blend-mode: difference; /* Inverts colors */
+            will-change: transform, width, height, border-radius;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s cubic-bezier(0.19, 1, 0.22, 1), 
+                        height 0.3s cubic-bezier(0.19, 1, 0.22, 1),
+                        background-color 0.3s;
+        }
+
+        #custom-cursor.active {
+            width: 60px;
+            height: 60px;
+            background: var(--orange);
+            mix-blend-mode: difference;
+            opacity: 0.8;
+        }
+
+        /* --- SWISS GRID UTILITIES --- */
+        .swiss-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            border-bottom: 1px solid var(--grid-line);
+        }
+        .border-r-grid { border-right: 1px solid var(--grid-line); }
+        .border-l-grid { border-left: 1px solid var(--grid-line); }
+        .border-t-grid { border-top: 1px solid var(--grid-line); }
+        
+        /* --- ANIMATIONS --- */
         .reveal-text {
-            /* Update styles for visibility */
-            clip-path: inset(0%);
-            opacity: 1;
-            transition: opacity 0.5s ease-in-out;
+            clip-path: inset(0 0 100% 0);
+            transition: clip-path 1s cubic-bezier(0.77, 0, 0.175, 1);
         }
+        .reveal-text.active { clip-path: inset(0 0 0 0); }
+
         .reveal-img {
-            /* Update styles for visibility */
-            clip-path: inset(0%);
-            opacity: 1;
-            transition: opacity 0.5s ease-in-out;
+            clip-path: inset(0 100% 0 0);
+            transition: clip-path 1.2s cubic-bezier(0.77, 0, 0.175, 1);
         }
+        .reveal-img.active { clip-path: inset(0 0 0 0); }
+
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* --- PROJECT OVERLAY --- */
+        #project-overlay {
+            /* Full screen overlay */
+        }
+
+        /* Wrapper for Parallax Movement (JS controlled) */
+        .parallax-wrapper {
+            position: absolute;
+            will-change: transform;
+            /* Smooth transition for mouse movement */
+            transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+            /* Center the wrapper on its coordinate */
+            transform: translate(-50%, -50%);
+        }
+
+        /* Inner Image for Breathing Animation (CSS controlled) */
+        .breathing-img {
+            display: block;
+            border-radius: 4px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            opacity: 0;
+            /* Fast fade in (0.5s) + Endless breathing */
+            animation: fadeIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards, breathe 8s ease-in-out infinite;
+            filter: grayscale(100%) contrast(120%) brightness(0.8);
+            transition: filter 0.4s ease, transform 0.4s ease, opacity 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-15px) scale(1.03); }
+        }
+        
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .parallax-wrapper:hover .breathing-img {
+            filter: grayscale(0%) contrast(100%) brightness(1);
+            transform: scale(1.15);
+            z-index: 100;
+            box-shadow: 0 40px 80px rgba(255, 77, 0, 0.25);
+            opacity: 1;
+        }
+
+        /* --- NOISE OVERLAY --- */
+        .noise {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.05;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+        }
+
+        /* --- CANVAS --- */
+        #bg-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        /* Hover image zoom for static cards */
+        .img-container { overflow: hidden; cursor: none; }
+        .img-container img { transition: transform 0.7s ease; }
+        .img-container:hover img { transform: scale(1.05); }
+
+        .mega-text { font-size: clamp(3rem, 8vw, 9rem); line-height: 0.9; }
     </style>
 </head>
-<body>
-    <header>
-        <div class="hero">
-            <div class="reveal-text">Welcome to My Portfolio</div>
-            <img class="reveal-img" src="image.jpg" alt="Hero Image">
+<body class="selection:bg-orange-600 selection:text-white">
+
+    <!-- CLAY CURSOR -->
+    <div id="custom-cursor"></div>
+
+    <!-- PROJECT CLOUD OVERLAY -->
+    <div id="project-overlay" class="fixed inset-0 z-[100] bg-black/98 opacity-0 pointer-events-none transition-opacity duration-500 flex items-center justify-center backdrop-blur-md">
+        <button id="close-overlay" class="absolute top-8 right-8 text-white text-xl z-[120] hover:text-orange-500 transition-colors uppercase font-mono tracking-widest cursor-pointer hover-trigger mix-blend-difference">Close [X]</button>
+        
+        <!-- Container for the floating cloud -->
+        <div id="overlay-images" class="relative w-full h-full overflow-hidden"></div>
+        
+        <!-- Text Label -->
+        <div id="overlay-text" class="absolute bottom-12 left-12 text-white z-[110] pointer-events-none mix-blend-difference">
+            <h2 class="text-4xl md:text-8xl serif italic text-orange-500 mb-2 leading-none" id="overlay-title">Project Name</h2>
+            <p class="text-sm font-mono text-neutral-400 uppercase tracking-widest" id="overlay-desc">Case Gallery</p>
+        </div>
+    </div>
+
+    <!-- CANVAS BACKGROUND -->
+    <canvas id="bg-canvas"></canvas>
+    
+    <!-- NOISE OVERLAY -->
+    <div class="noise"></div>
+
+    <!-- NAVIGATION -->
+    <nav class="fixed top-0 left-0 w-full z-40 px-6 py-6 flex justify-between items-start mix-blend-difference text-white">
+        <a href="#" class="text-sm font-bold tracking-widest uppercase hover-trigger">
+            /FrancoDesignio.
+        </a>
+        <div class="flex flex-col items-end gap-1 text-xs font-mono tracking-widest opacity-70">
+            <span>ZAPOPAN, MX</span>
+            <span class="text-orange-500">OPEN TO REMOTE</span>
+        </div>
+    </nav>
+
+    <!-- FLOATING MENU RIGHT -->
+    <div class="fixed top-1/2 right-6 -translate-y-1/2 z-40 flex flex-col gap-4 items-end mix-blend-difference">
+        <a href="#work" class="text-xs font-bold uppercase tracking-widest hover:text-orange-500 transition-colors hover-trigger">Work</a>
+        <a href="#about" class="text-xs font-bold uppercase tracking-widest hover:text-orange-500 transition-colors hover-trigger">Method</a>
+        <a href="mailto:designiofranco@gmail.com" class="text-xs font-bold uppercase tracking-widest hover:text-orange-500 transition-colors hover-trigger">Contact</a>
+    </div>
+
+    <!-- HERO SECTION -->
+    <header class="min-h-screen flex flex-col justify-center px-4 md:px-12 relative border-b-grid">
+        <div class="swiss-grid pb-12">
+            <div class="col-span-12 md:col-span-10 md:col-start-1">
+                <div class="reveal-text">
+                    <h1 class="mega-text font-normal text-white mb-6">
+                        Designing <br>
+                        <span class="serif italic text-orange-500">Intelligence</span>
+                    </h1>
+                </div>
+            </div>
+            <div class="col-span-12 md:col-span-6 md:col-start-1 mt-8">
+                <div class="reveal-text" style="transition-delay: 0.2s;">
+                    <p class="text-xl md:text-2xl font-light text-neutral-400 leading-relaxed border-l border-orange-500 pl-6 hover-trigger">
+                        Designed the product interface, user experience, and visual identity for a biomedical device that mimics physiological conditions for drug testing, turning complex biotech behavior into clear, usable interactions.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-12 left-12 flex items-center gap-4 animate-pulse">
+            <i class="fas fa-arrow-down text-orange-500"></i>
+            <span class="text-xs font-mono tracking-widest uppercase text-neutral-500">Scroll to Explore</span>
         </div>
     </header>
+
+    <!-- MARQUEE STRIP -->
+    <div class="border-t-grid border-b-grid bg-orange-600 text-black py-3 overflow-hidden">
+        <div class="marquee-container">
+            <div class="marquee-content text-sm font-bold uppercase tracking-widest">
+                Human Factors &bull; Medical UI &bull; Systems Thinking &bull; IEC 62366 &bull; Embedded Devices &bull; Prototyping &bull; 
+                Human Factors &bull; Medical UI &bull; Systems Thinking &bull; IEC 62366 &bull; Embedded Devices &bull; Prototyping &bull;
+                Human Factors &bull; Medical UI &bull; Systems Thinking &bull; IEC 62366 &bull; Embedded Devices &bull; Prototyping &bull;
+            </div>
+        </div>
+    </div>
+
+    <!-- WORK SECTION -->
+    <main id="work">
+        
+        <!-- PROJECT 01: CORMEUM -->
+        <article class="swiss-grid md:min-h-screen items-center border-b-grid group">
+            <div class="col-span-12 md:col-span-4 p-8 md:p-12 border-r-grid flex flex-col justify-between h-full bg-neutral-950 z-10 transition-colors duration-500 group-hover:bg-neutral-900">
+                <div>
+                    <span class="block text-xs font-mono text-orange-500 mb-4">01 / CASE STUDY</span>
+                    <h2 class="text-5xl md:text-6xl text-white mb-4 hover-trigger project-trigger" data-project="cormeum">Cormeum <br> Tech</h2>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="px-2 py-1 border border-neutral-700 text-[10px] uppercase tracking-wider text-neutral-400">MedTech</span>
+                        <span class="px-2 py-1 border border-neutral-700 text-[10px] uppercase tracking-wider text-neutral-400">Embedded UI</span>
+                    </div>
+                </div>
+                <div class="mt-12 md:mt-0">
+                    <p class="text-neutral-400 font-light leading-relaxed mb-6 text-sm">
+                        Designed the product interface, user experience, and visual identity for a biomedical device that mimics physiological conditions for drug testing, turning complex biotech behavior into clear, usable interactions.
+                    </p>
+                    <button class="inline-flex items-center gap-2 text-orange-500 text-sm font-bold uppercase tracking-widest hover-trigger mt-4 project-trigger" data-project="cormeum">
+                        View Case <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-span-12 md:col-span-8 h-[50vh] md:h-screen relative overflow-hidden img-container view-trigger cursor-pointer project-trigger" data-project="cormeum">
+                <div class="reveal-img w-full h-full">
+                    <img src="https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=988&auto=format&fit=crop" 
+                         alt="Cormeum Interface" 
+                         class="w-full h-full object-cover filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700">
+                    
+                    <div class="absolute bottom-0 left-0 p-8 bg-black/80 backdrop-blur-md border-t border-r border-white/10 pointer-events-none">
+                        <div class="text-xs font-mono text-orange-500 mb-1">STRATEGIC INSIGHT</div>
+                        <p class="text-sm text-white max-w-xs">Management by exception: System remains neutral until parameters deviate.</p>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- PROJECT 02: EMSADI -->
+        <article class="swiss-grid md:min-h-screen items-center border-b-grid group">
+             <div class="col-span-12 md:col-span-8 h-[50vh] md:h-screen relative overflow-hidden img-container md:order-2 view-trigger cursor-pointer project-trigger" data-project="emsadi">
+                <div class="reveal-img w-full h-full">
+                    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=2670&auto=format&fit=crop" 
+                         alt="EMSADI Network" 
+                         class="w-full h-full object-cover filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700">
+                </div>
+            </div>
+
+            <div class="col-span-12 md:col-span-4 p-8 md:p-12 md:border-l-grid flex flex-col justify-between h-full bg-neutral-950 z-10 transition-colors duration-500 group-hover:bg-neutral-900 md:order-1">
+                <div>
+                    <span class="block text-xs font-mono text-orange-500 mb-4">02 / CASE STUDY</span>
+                    <h2 class="text-5xl md:text-6xl text-white mb-4 hover-trigger project-trigger" data-project="emsadi">EMSADI <br> Collective</h2>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="px-2 py-1 border border-neutral-700 text-[10px] uppercase tracking-wider text-neutral-400">Digital Health</span>
+                        <span class="px-2 py-1 border border-neutral-700 text-[10px] uppercase tracking-wider text-neutral-400">Systems</span>
+                    </div>
+                </div>
+                <div class="mt-12 md:mt-0">
+                    <p class="text-neutral-400 font-light leading-relaxed mb-6 text-sm">
+                        Led design strategy for a health innovation collective. Created a visual language that aligned clinical goals with engineering specs, generating 24+ scalable projects.
+                    </p>
+                    <button class="inline-flex items-center gap-2 text-orange-500 text-sm font-bold uppercase tracking-widest hover-trigger mt-4 project-trigger" data-project="emsadi">
+                        View Case <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </article>
+
+        <!-- PROJECT 03: DESIGN.LAB -->
+        <article class="swiss-grid md:min-h-[80vh] items-center border-b-grid group">
+            <div class="col-span-12 md:col-span-4 p-8 md:p-12 border-r-grid flex flex-col justify-between h-full bg-neutral-950 group-hover:bg-neutral-900 transition-colors">
+                <div>
+                    <span class="block text-xs font-mono text-orange-500 mb-4">03 / EDUCATION</span>
+                    <h2 class="text-5xl md:text-6xl text-white mb-4 hover-trigger project-trigger" data-project="designlab">design.lab</h2>
+                    <p class="text-neutral-400 font-light leading-relaxed mt-6 text-sm">
+                        Founded an educational program teaching structured design thinking. Systematized "creativity" into repeatable workflows suitable for regulated industries.
+                    </p>
+                </div>
+            </div>
+            <div class="col-span-12 md:col-span-8 h-[40vh] md:h-full relative overflow-hidden img-container border-t md:border-t-0 view-trigger cursor-pointer project-trigger" data-project="designlab">
+                 <div class="reveal-img w-full h-full">
+                    <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=2670&auto=format&fit=crop" 
+                         alt="Workshop" 
+                         class="w-full h-full object-cover filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700">
+                 </div>
+            </div>
+        </article>
+
+        <div class="swiss-grid">
+            <div class="col-span-12 md:col-span-6 border-r-grid p-12 hover:bg-white/5 transition-colors group hover-trigger">
+                <i class="fas fa-hand-sparkles text-3xl text-neutral-600 mb-6 group-hover:text-orange-500 transition-colors"></i>
+                <h3 class="text-2xl text-white mb-2">VR Haptic Glove</h3>
+                <p class="text-sm text-neutral-500">Hardware interaction models for physical feedback in virtual environments.</p>
+            </div>
+            <div class="col-span-12 md:col-span-6 p-12 hover:bg-white/5 transition-colors group hover-trigger">
+                <i class="fas fa-wand-magic-sparkles text-3xl text-neutral-600 mb-6 group-hover:text-orange-500 transition-colors"></i>
+                <h3 class="text-2xl text-white mb-2">AI Automation Tools</h3>
+                <p class="text-sm text-neutral-500">Internal tools integrating GenAI to reduce visual ideation cycles by 25%.</p>
+            </div>
+        </div>
+    </main>
+
+    <section id="about" class="py-24 border-t-grid relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="swiss-grid border-none">
+                <div class="col-span-12 md:col-span-8">
+                    <h2 class="mega-text text-white leading-none mb-12">
+                        Safety is <br> <span class="serif italic text-neutral-600">Designed.</span>
+                    </h2>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+                <div class="border-t border-neutral-800 pt-6">
+                    <span class="text-orange-500 text-xs font-mono mb-2 block">01</span>
+                    <h4 class="text-xl text-white mb-2">Analyze</h4>
+                    <p class="text-sm text-neutral-500">Heuristic Evaluation, Contextual Inquiry, Risk Analysis (ISO 14971).</p>
+                </div>
+                <div class="border-t border-neutral-800 pt-6">
+                    <span class="text-orange-500 text-xs font-mono mb-2 block">02</span>
+                    <h4 class="text-xl text-white mb-2">Model</h4>
+                    <p class="text-sm text-neutral-500">Information Architecture, Workflow Mapping, Cognitive Load Management.</p>
+                </div>
+                <div class="border-t border-neutral-800 pt-6">
+                    <span class="text-orange-500 text-xs font-mono mb-2 block">03</span>
+                    <h4 class="text-xl text-white mb-2">Validate</h4>
+                    <p class="text-sm text-neutral-500">Usability Testing, Error Recovery Analysis, High-Fi Prototyping.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="border-t-grid py-24 bg-orange-600 text-black">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <h2 class="text-4xl md:text-8xl font-normal mb-8 serif">Let's Talk.</h2>
+            <a href="mailto:designiofranco@gmail.com" class="text-lg md:text-2xl font-bold uppercase tracking-widest border-b-2 border-black pb-1 hover:text-white hover:border-white transition-colors hover-trigger">
+                designiofranco@gmail.com
+            </a>
+            <div class="mt-12 flex justify-center gap-8 text-xs font-mono font-bold uppercase tracking-widest">
+                <span>© 2026 Franco Aguilera</span>
+                <a href="https://www.linkedin.com/in/franco-aguilera/" class="hover:text-white transition-colors hover-trigger">LinkedIn</a>
+                <a href="#" class="hover:text-white transition-colors hover-trigger">Resume</a>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        window.addEventListener('load', function() {
-            const revealElements = document.querySelectorAll('.reveal-text, .reveal-img');
-            revealElements.forEach((el) => {
-                const rect = el.getBoundingClientRect();
-                if (rect.top < window.innerHeight && rect.bottom >= 0) {
-                    el.classList.add('active');
-                }
+        // --- IMAGE DATA (8 per project) ---
+        const projectData = {
+            cormeum: {
+                title: "Cormeum Tech",
+                images: [
+                    "https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=600&auto=format&fit=crop", 
+                    "https://images.unsplash.com/photo-1530210124550-912dc1381cb8?q=80&w=600&auto=format&fit=crop", 
+                    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600&auto=format&fit=crop", 
+                    "https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?q=80&w=600&auto=format&fit=crop", 
+                    "https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=600&auto=format&fit=crop", 
+                    "https://images.unsplash.com/photo-1532094349884-543bc11b234d?q=80&w=600&auto=format&fit=crop",
+                    "https://images.unsplash.com/photo-1628595351029-c2bf17511435?q=80&w=600&auto=format&fit=crop",
+                    "https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=600&auto=format&fit=crop"
+                ]
+            },
+            emsadi: {
+                title: "EMSADI Collective",
+                images: [
+                    "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=600&auto=format&fit=crop", 
+                    "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=600&auto=format&fit=crop", 
+                    "https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=600&auto=format&fit=crop", 
+                    "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=600&auto=format&fit=crop", 
+                    "https://images.unsplash.com/photo-1504384308090-c54be3855833?q=80&w=600&auto=format&fit=crop",
+                    "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?q=80&w=600&auto=format&fit=crop",
+                    "https://images.unsplash.com/photo-1576091160550-2187d80a02ff?q=80&w=600&auto=format&fit=crop",
+                    "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=600&auto=format&fit=crop"
+                ]
+            },
+            designlab: {
+                title: "design.lab",
+                images: [
+                    "https://images.unsplash.com/photo-1509395062183-67c5ad6faff9?q=80&w=600&auto=format&fit=crop", 
+                    "https://images.unsplash.com/photo-1606326608606-aa0b62935f2b?q=80&w=600&auto=format&fit=crop", 
+                    "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=600&auto=format&fit=crop", 
+                    "https://images.unsplash.com/photo-1531545514256-b1400bc00f31?q=80&w=600&auto=format&fit=crop", 
+                    "https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=600&auto=format&fit=crop",
+                    "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=600&auto=format&fit=crop",
+                    "https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=600&auto=format&fit=crop",
+                    "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=600&auto=format&fit=crop"
+                ]
+            }
+        };
+
+        const overlay = document.getElementById('project-overlay');
+        const overlayImages = document.getElementById('overlay-images');
+        const overlayTitle = document.getElementById('overlay-title');
+        const closeBtn = document.getElementById('close-overlay');
+
+        // --- OPEN OVERLAY & GENERATE CLOUD (SECTOR DISTRIBUTION) ---
+        function openProjectOverlay(projectId) {
+            const data = projectData[projectId];
+            if (!data) return;
+
+            overlayTitle.innerText = data.title;
+            overlayImages.innerHTML = ''; // Clear previous
+
+            // Defined Zones (Percentage Centers: x, y)
+            // Strategy: 2 Rows, 4 Cols roughly, but organic
+            const sectors = [
+                {x: 12, y: 15}, {x: 37, y: 12}, {x: 62, y: 15}, {x: 88, y: 12}, // Top Row
+                {x: 25, y: 65}, {x: 50, y: 55}, {x: 75, y: 65}, {x: 92, y: 75}  // Bottom Row (Avoid Bottom Left Text)
+            ];
+
+            // Shuffle sectors slightly for variation (optional, but good)
+            const shuffledSectors = sectors.sort(() => Math.random() - 0.5);
+
+            // Generate Cloud Images
+            data.images.forEach((src, index) => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'parallax-wrapper';
+                
+                // Random Size (Controlled range for visibility)
+                // 16vw to 24vw
+                const width = Math.floor(Math.random() * 8 + 16); 
+                wrapper.style.width = width + 'vw';
+                
+                // Position logic using Sectors + Jitter
+                const sector = shuffledSectors[index] || {x: 50, y: 50}; // Fallback
+                const jitterX = (Math.random() - 0.5) * 8; // +/- 4%
+                const jitterY = (Math.random() - 0.5) * 8; // +/- 4%
+                
+                wrapper.style.left = (sector.x + jitterX) + '%';
+                wrapper.style.top = (sector.y + jitterY) + '%';
+                
+                // Random Z-index
+                const zIndex = Math.floor(Math.random() * 10);
+                wrapper.style.zIndex = zIndex;
+                
+                // Parallax Speed Factor
+                const pSpeed = (Math.random() * 0.6 + 0.3).toFixed(2); 
+                wrapper.setAttribute('data-speed', pSpeed);
+
+                const img = document.createElement('img');
+                img.src = src;
+                img.className = 'breathing-img';
+                
+                // Async Breathing & Fade In
+                img.style.animationDelay = `0s, ${Math.random() * -5}s`; 
+                img.style.animationDuration = `0.5s, ${Math.random() * 3 + 6}s`;
+
+                wrapper.appendChild(img);
+                overlayImages.appendChild(wrapper);
+            });
+
+            // Show Overlay
+            overlay.classList.remove('pointer-events-none', 'opacity-0');
+            document.body.style.overflow = 'hidden'; // Lock scroll
+        }
+
+        function closeOverlay() {
+            overlay.classList.add('pointer-events-none', 'opacity-0');
+            document.body.style.overflow = ''; // Unlock scroll
+            setTimeout(() => {
+                overlayImages.innerHTML = ''; 
+            }, 500);
+        }
+
+        // --- GLOBAL PARALLAX (Subtle Mouse Follow) ---
+        document.addEventListener('mousemove', (e) => {
+            // Only apply if overlay is open
+            if (!overlay.classList.contains('pointer-events-none')) {
+                const centerX = window.innerWidth / 2;
+                const centerY = window.innerHeight / 2;
+                
+                const mouseX = e.clientX - centerX;
+                const mouseY = e.clientY - centerY;
+
+                // Move all wrappers in the overlay
+                const wrappers = overlayImages.querySelectorAll('.parallax-wrapper');
+                wrappers.forEach(wrap => {
+                    const speed = parseFloat(wrap.getAttribute('data-speed'));
+                    
+                    // Move in direction of cursor
+                    const x = mouseX * speed * 0.04; 
+                    const y = mouseY * speed * 0.04;
+                    
+                    // Maintain the centering translation while adding parallax offset
+                    wrap.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+                });
+            }
+        });
+
+        // Attach listeners
+        document.querySelectorAll('.project-trigger').forEach(trigger => {
+            trigger.addEventListener('click', (e) => {
+                const projectId = trigger.getAttribute('data-project');
+                openProjectOverlay(projectId);
             });
         });
+
+        closeBtn.addEventListener('click', closeOverlay);
+        
+        // Close on background click
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay || e.target === overlayImages) {
+                closeOverlay();
+            }
+        });
+
+        // --- CURSOR & CANVAS SCRIPTS ---
+        const cursor = document.getElementById('custom-cursor');
+        let cMouseX = window.innerWidth / 2, cMouseY = window.innerHeight / 2;
+        let cCursorX = window.innerWidth / 2, cCursorY = window.innerHeight / 2;
+        
+        document.addEventListener('mousemove', (e) => { cMouseX = e.clientX; cMouseY = e.clientY; });
+
+        function animateCursor() {
+            const distX = cMouseX - cCursorX;
+            const distY = cMouseY - cCursorY;
+            cCursorX += distX * 0.15;
+            cCursorY += distY * 0.15;
+            
+            const vel = Math.sqrt(distX*distX + distY*distY);
+            const scale = Math.min(vel * 0.005, 0.5);
+            const angle = Math.atan2(distY, distX) * 180 / Math.PI;
+            
+            cursor.style.left = `${cCursorX}px`;
+            cursor.style.top = `${cCursorY}px`;
+            
+            if (vel > 1) {
+                cursor.style.transform = `translate(-50%, -50%) rotate(${angle}deg) scale(${1+scale}, ${1-scale})`;
+                cursor.style.borderRadius = "40% 60% 40% 60% / 60% 40% 60% 40%";
+            } else {
+                cursor.style.transform = `translate(-50%, -50%) scale(1)`;
+                cursor.style.borderRadius = "50%";
+            }
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        const interactives = 'a, button, .hover-trigger, .parallax-wrapper, .view-trigger';
+        document.querySelectorAll(interactives).forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('active'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
+        });
+
+        // BG Canvas
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, particles = [];
+        function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize);
+        resize();
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width; this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5; this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 1.5;
+            }
+            update() {
+                this.x += this.vx; this.y += this.vy;
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(255, 77, 0, 0.3)'; ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+            }
+        }
+        for (let i = 0; i < 60; i++) particles.push(new Particle());
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update(); particles[i].draw();
+                for (let j = i; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist < 150) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(100, 100, 100, ${0.1 - dist/1500})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateCanvas);
+        }
+        animateCanvas();
+
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+        }, observerOptions);
+        document.querySelectorAll('.reveal-text, .reveal-img').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
