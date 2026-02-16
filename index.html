@@ -1,16 +1,46 @@
-<style>
-  .hero-section {
-    clip-path: visible; /* Change from hidden to visible */
-  }
-</style>
-
 <script>
-  window.addEventListener('load', () => {
-    const elements = document.querySelectorAll('.some-selector'); // Adjust the selector based on your needs
-    elements.forEach(element => {
-      if (element.getBoundingClientRect().top < window.innerHeight) {
-        element.classList.add('active'); // Add the 'active' class
-      }
-    });
+  document.addEventListener('DOMContentLoaded', function () {
+      const revealTextElems = document.querySelectorAll('.reveal-text');
+      const revealImgElems = document.querySelectorAll('.reveal-img');
+
+      const options = {
+        threshold: 0.1
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+          entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                  const target = entry.target;
+                  target.classList.add('reveal');
+                  observer.unobserve(target);
+              }
+          });
+      }, options);
+
+      revealTextElems.forEach(elem => observer.observe(elem));
+      revealImgElems.forEach(elem => observer.observe(elem));
+
+      // Trigger reveal animations for elements already in viewport on page load
+      revealTextElems.forEach(elem => {
+          if (elem.getBoundingClientRect().top < window.innerHeight && elem.getBoundingClientRect().bottom > 0) {
+              elem.classList.add('reveal');
+          }
+      });
+      revealImgElems.forEach(elem => {
+          if (elem.getBoundingClientRect().top < window.innerHeight && elem.getBoundingClientRect().bottom > 0) {
+              elem.classList.add('reveal');
+          }
+      });
   });
 </script>
+<style>
+    .reveal-text {
+        clip-path: inset(0 0 0 0);
+        transition: clip-path 0.5s ease;
+    }
+
+    .reveal-img {
+        clip-path: inset(0 0 0 0);
+        transition: clip-path 0.5s ease;
+    }
+</style>
