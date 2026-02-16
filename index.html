@@ -70,6 +70,17 @@
         }
         .reveal-text.active { clip-path: inset(0 0 0 0); }
 
+        /* FIX: Ensure initial visibility on page load for HERO */
+        .reveal-text.immediate { 
+            clip-path: inset(0 0 0 0);
+            animation: revealFromBottom 1s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        @keyframes revealFromBottom {
+            from { clip-path: inset(0 0 100% 0); }
+            to { clip-path: inset(0 0 0 0); }
+        }
+
         .reveal-img {
             clip-path: inset(0 100% 0 0);
             transition: clip-path 1.2s cubic-bezier(0.77, 0, 0.175, 1);
@@ -207,7 +218,7 @@
     <header class="min-h-screen flex flex-col justify-center px-4 md:px-12 relative border-b-grid">
         <div class="swiss-grid pb-12">
             <div class="col-span-12 md:col-span-10 md:col-start-1">
-                <div class="reveal-text">
+                <div class="reveal-text immediate">
                     <h1 class="mega-text font-normal text-white mb-6">
                         Designing <br>
                         <span class="serif italic text-orange-500">Intelligence</span>
@@ -215,7 +226,7 @@
                 </div>
             </div>
             <div class="col-span-12 md:col-span-6 md:col-start-1 mt-8">
-                <div class="reveal-text" style="transition-delay: 0.2s;">
+                <div class="reveal-text immediate" style="animation-delay: 0.2s;">
                     <p class="text-xl md:text-2xl font-light text-neutral-400 leading-relaxed border-l border-orange-500 pl-6 hover-trigger">
                         Designed the product interface, user experience, and visual identity for a biomedical device that mimics physiological conditions for drug testing, turning complex biotech behavior into clear, usable interactions.
                     </p>
@@ -583,6 +594,14 @@
             el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
         });
 
+        // FIX: Trigger animations on page load instead of relying solely on IntersectionObserver
+        window.addEventListener('DOMContentLoaded', () => {
+            // Immediately show hero elements
+            document.querySelectorAll('.reveal-text.immediate').forEach(el => {
+                el.classList.add('active');
+            });
+        });
+
         // BG Canvas
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
@@ -633,7 +652,8 @@
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
         }, observerOptions);
-        document.querySelectorAll('.reveal-text, .reveal-img').forEach(el => observer.observe(el));
+        // Only observe elements that aren't marked as immediate
+        document.querySelectorAll('.reveal-text:not(.immediate), .reveal-img').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
