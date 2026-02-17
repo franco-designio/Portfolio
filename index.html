@@ -277,7 +277,7 @@
 
             <div class="col-span-12 md:col-span-8 h-[50vh] md:h-screen relative overflow-hidden img-container view-trigger cursor-pointer project-trigger" data-project="cormeum">
                 <div class="reveal-img w-full h-full">
-                    <img src="https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=988&auto=format&fit=crop"
+                    <img src="img/cormeum-cover.png"
                          alt="Cormeum Interface" 
                          class="w-full h-full object-cover filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700">
                     
@@ -594,13 +594,18 @@
             el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
         });
 
-        // FIX: Trigger animations on page load instead of relying solely on IntersectionObserver
-        window.addEventListener('DOMContentLoaded', () => {
-            // Immediately show hero elements
-            document.querySelectorAll('.reveal-text.immediate').forEach(el => {
-                el.classList.add('active');
-            });
-        });
+       window.addEventListener('DOMContentLoaded', () => {
+    // Immediately show hero elements
+    document.querySelectorAll('.reveal-text.immediate').forEach(el => {
+        el.classList.add('active');
+    });
+    
+    // ADD THIS LINE ↓
+    document.querySelectorAll('.reveal-img').forEach(el => {
+        el.classList.add('active');
+    });
+});
+        
 
         // BG Canvas
         const canvas = document.getElementById('bg-canvas');
