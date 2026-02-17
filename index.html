@@ -734,7 +734,7 @@
             
             // Dibujar CONEXIONES (Líneas)
             // Solo conectamos nodos cercanos en el espacio 3D para mantener la estructura
-            ctx.beginPath();
+            /* ctx.beginPath();
             for (let i = 0; i < nodes.length; i++) {
                 for (let j = i + 1; j < nodes.length; j++) {
                     // Calculamos distancia real proyectada en pantalla 2D
@@ -757,7 +757,7 @@
                     }
                 }
             }
-            ctx.stroke(); // Dibujamos todas las líneas de una vez para rendimiento
+            ctx.stroke(); // Dibujamos todas las líneas de una vez para rendimiento */
 
             // Dibujar NODOS (Letras)
             nodes.forEach(node => node.draw());
