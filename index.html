@@ -279,7 +279,7 @@
                 </div>
                 <div class="mt-12 md:mt-0">
                     <p class="text-neutral-400 font-light leading-relaxed mb-6 text-sm">
-                        Designed the product interface, user experience, and visual identity for a biomedical device that mimics physiological conditions for drug testing, turning complex biotech behavior into clear, usable interactions.
+                        Designed the product interface, user experience, and visual identity for a multi-organ-on-a-chip platform, a biomedical device that mimics physiological conditions for drug testing. It simulated systemic effects, reduced errors, and enabled faster, more ethical, and accurate assessments of drug safety and efficacy.
                     </p>
                     <button class="inline-flex items-center gap-2 text-orange-500 text-sm font-bold uppercase tracking-widest hover-trigger mt-4 project-trigger" data-project="cormeum">
                         View Case <i class="fas fa-arrow-right"></i>
@@ -578,12 +578,40 @@
                     `;
                 }
             
-                // Common image card
+                // Image slideshow card with auto-play and dots
                 const imgCard1 = `
                     <div class="scroll-card max-w-4xl w-full self-end bg-neutral-950 p-2 rounded-3xl border border-white/5 shadow-2xl">
-                        <img src="${data.images[0]}" class="w-full h-auto rounded-2xl object-cover aspect-[16/9] opacity-90 hover:opacity-100 transition-opacity">
-                        <div class="p-4 flex justify-between items-center">
-                            <span class="text-xs font-mono text-neutral-500">FIG 01. INTERFACE LAYOUT</span>
+                        <div class="relative">
+                            <!-- Slideshow container -->
+                            <div class="slideshow-container relative overflow-hidden rounded-2xl aspect-[16/9]">
+                                ${data.images.map((img, index) => `
+                                    <img src="${img}" 
+                                         class="slideshow-img w-full h-full object-cover absolute top-0 left-0 opacity-0 transition-opacity duration-500 ${index === 0 ? 'opacity-90' : ''}" 
+                                         data-slide="${index}">
+                                `).join('')}
+                            </div>
+            
+                                            <!-- Navigation arrows -->
+                            <button class="slideshow-prev absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full w-8 h-8 flex items-center justify-center transition-colors">
+                                <i class="fas fa-chevron-left text-sm"></i>
+                            </button>
+                            <button class="slideshow-next absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full w-8 h-8 flex items-center justify-center transition-colors">
+                                <i class="fas fa-chevron-right text-sm"></i>
+                            </button>
+            
+                                            <!-- Dot indicators -->
+                            <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                                ${data.images.map((_, index) => `
+                                    <button class="slideshow-dot w-2 h-2 rounded-full transition-all ${index === 0 ? 'bg-orange-500 w-6' : 'bg-white/50 hover:bg-white/75'}" 
+                                            data-slide-to="${index}"></button>
+                                `).join('')}
+                            </div>
+                        </div>
+            
+                                    <div class="p-4 flex justify-between items-center">
+                            <span class="text-xs font-mono text-neutral-500">
+                                <span class="slideshow-counter">FIG 01</span>. INTERFACE LAYOUT
+                            </span>
                             <i class="fas fa-expand text-neutral-500"></i>
                         </div>
                     </div>
@@ -603,6 +631,96 @@
                 overlayContent.innerHTML = heroCard + textCard1 + imgCard1 + textCard2 + comboCard + closingCardHTML;
                 overlay.classList.remove('pointer-events-none', 'opacity-0');
                 document.body.style.overflow = 'hidden';
+
+                    // Initialize slideshow
+                    function initSlideshow() {
+                                const container = document.querySelector('.slideshow-container');
+                                if (!container) return;
+
+                                const slides = container.querySelectorAll('.slideshow-img');
+                                const dots = document.querySelectorAll('.slideshow-dot');
+                                const prevBtn = document.querySelector('.slideshow-prev');
+                                const nextBtn = document.querySelector('.slideshow-next');
+                                const counter = document.querySelector('.slideshow-counter');
+
+                                let currentSlide = 0;
+                                let autoPlayInterval;
+
+                                function showSlide(index) {
+                                                // Wrap around
+                                                if (index >= slides.length) currentSlide = 0;
+                                                else if (index < 0) currentSlide = slides.length - 1;
+                                                else currentSlide = index;
+
+                                                // Update images
+                                                slides.forEach((slide, i) => {
+                                                                    if (i === currentSlide) {
+                                                                                            slide.classList.remove('opacity-0');
+                                                                                            slide.classList.add('opacity-90');
+                                                                                        } else {
+                                                                                            slide.classList.remove('opacity-90');
+                                                                                            slide.classList.add('opacity-0');
+                                                                                        }
+                                                                });
+
+                                                // Update dots
+                                                dots.forEach((dot, i) => {
+                                                                    if (i === currentSlide) {
+                                                                                            dot.classList.remove('bg-white/50', 'w-2');
+                                                                                            dot.classList.add('bg-orange-500', 'w-6');
+                                                                                        } else {
+                                                                                            dot.classList.remove('bg-orange-500', 'w-6');
+                                                                                            dot.classList.add('bg-white/50', 'w-2');
+                                                                                        }
+                                                                });
+
+                                                // Update counter
+                                                if (counter) {
+                                                                    counter.textContent = `FIG ${String(currentSlide + 1).padStart(2, '0')}`;
+                                                                }
+                                            }
+
+                                function nextSlide() {
+                                                showSlide(currentSlide + 1);
+                                            }
+
+                                function prevSlide() {
+                                                showSlide(currentSlide - 1);
+                                            }
+
+                                function resetAutoPlay() {
+                                                clearInterval(autoPlayInterval);
+                                                autoPlayInterval = setInterval(nextSlide, 7000);
+                                            }
+
+                                // Event listeners
+                                prevBtn?.addEventListener('click', () => {
+                                                prevSlide();
+                                                resetAutoPlay();
+                                            });
+
+                                nextBtn?.addEventListener('click', () => {
+                                                nextSlide();
+                                                resetAutoPlay();
+                                            });
+
+                                dots.forEach((dot, index) => {
+                                                dot.addEventListener('click', () => {
+                                                                    showSlide(index);
+                                                                    resetAutoPlay();
+                                                                });
+                                            });
+
+                                // Pause on hover
+                                container.addEventListener('mouseenter', () => clearInterval(autoPlayInterval));
+                                container.addEventListener('mouseleave', resetAutoPlay);
+
+                                // Start autoplay
+                                autoPlayInterval = setInterval(nextSlide, 7000);
+                            }
+
+                    // Call initSlideshow
+                    initSlideshow();
             
                 // 4. Observe for scroll animations
                 document.querySelectorAll('#overlay-content .scroll-card').forEach(el => {
