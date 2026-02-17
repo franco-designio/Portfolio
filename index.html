@@ -340,8 +340,8 @@
         </article>
 
         <!-- PROJECT 03: DESIGN.LAB -->
-        <article class="swiss-grid md:min-h-[80vh] items-center border-b-grid group">
-            <div class="col-span-12 md:col-span-4 p-8 md:p-12 border-r-grid flex flex-col justify-between h-full bg-neutral-950 group-hover:bg-neutral-900 transition-colors">
+        <article class="swiss-grid md:min-h-screen items-center border-b-grid group">
+            <div class="col-span-12 md:col-span-4 p-8 md:p-12 border-r-grid flex flex-col justify-between h-full bg-neutral-950 z-10 transition-colors duration-500 group-hover:bg-neutral-900">
                 <div>
                     <span class="block text-xs font-mono text-orange-500 mb-4">03 / EDUCATION</span>
                     <h2 class="text-5xl md:text-6xl text-white mb-4 hover-trigger project-trigger" data-project="designlab">design.lab</h2>
@@ -349,20 +349,27 @@
                         <span class="px-2 py-1 border border-neutral-700 text-[10px] uppercase tracking-wider text-neutral-400">Design Thinking</span>
                         <span class="px-2 py-1 border border-neutral-700 text-[10px] uppercase tracking-wider text-neutral-400">Innovation</span>
                     </div>
-                    <p class="text-neutral-400 font-light leading-relaxed mt-6 text-sm">
-                    Workshop program teaching design methods as practical skills. Focuses on turning vague creative concepts into structured workflows using real tools like Figma, Notion, and AI.
+                </div>
+                <div class="mt-12 md:mt-0">
+                    <p class="text-neutral-400 font-light leading-relaxed mb-6 text-sm">
+                        Workshop program teaching design methods as practical skills. Focuses on turning vague creative concepts into structured workflows using real tools like Figma, Notion, and AI.
                     </p>
+                    <button class="inline-flex items-center gap-2 text-orange-500 text-sm font-bold uppercase tracking-widest hover-trigger mt-4 project-trigger" data-project="designlab">
+                        View Case <i class="fas fa-arrow-right"></i>
+                    </button>
                 </div>
             </div>
-            <div class="col-span-12 md:col-span-8 h-[40vh] md:h-full relative overflow-hidden img-container border-t md:border-t-0 view-trigger cursor-pointer project-trigger" data-project="designlab">
-                 <!-- Added 'immediate' class here -->
-                 <div class="reveal-img immediate w-full h-full">
+            <!-- IMAGE BLOCK (Standardized: Right) -->
+            <div class="col-span-12 md:col-span-8 h-[50vh] md:h-screen relative overflow-hidden img-container view-trigger cursor-pointer project-trigger" data-project="designlab">
+                <!-- Added 'immediate' class here -->
+                <div class="reveal-img immediate w-full h-full">
                     <img src="img/designlab-cover.png" 
                          alt="Workshop" 
                          class="w-full h-full object-cover filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700">
-                 </div>
+                </div>
             </div>
         </article>
+
 
         <div class="swiss-grid">
             <div class="col-span-12 md:col-span-6 border-r-grid p-12 hover:bg-white/5 transition-colors group hover-trigger">
