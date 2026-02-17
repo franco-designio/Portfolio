@@ -238,7 +238,7 @@
             <div class="col-span-12 md:col-span-6 md:col-start-1 mt-12">
                 <div class="reveal-text immediate" style="animation-delay: 0.2s;">
                     <p class="text-xl md:text-2xl font-light text-neutral-400 leading-relaxed border-l border-orange-500 pl-6 hover-trigger">
-                    Human-centered designer who likes hard problems, regulated spaces, and making things safe enough to trust.
+                    Human-centered designer who likes solving complicated problems, regulated spaces, and ensuring products are safe and reliable.
                     </p>
                 </div>
             </div>
@@ -268,6 +268,7 @@
         
         <!-- PROJECT 01: CORMEUM -->
         <article class="swiss-grid md:min-h-screen items-center border-b-grid group">
+            <!-- TEXT BLOCK (Standardized: Left) -->
             <div class="col-span-12 md:col-span-4 p-8 md:p-12 border-r-grid flex flex-col justify-between h-full bg-neutral-950 z-10 transition-colors duration-500 group-hover:bg-neutral-900">
                 <div>
                     <span class="block text-xs font-mono text-orange-500 mb-4">01 / CASE STUDY</span>
@@ -287,10 +288,10 @@
                 </div>
             </div>
 
+            <!-- IMAGE BLOCK (Standardized: Right) -->
             <div class="col-span-12 md:col-span-8 h-[50vh] md:h-screen relative overflow-hidden img-container view-trigger cursor-pointer project-trigger" data-project="cormeum">
-                <!-- Added "immediate" class to prevent visibility issues on deploy -->
                 <div class="reveal-img immediate w-full h-full">
-                    <img src="img/cormeum-cover-biology.png" 
+                    <img src="img/cormeum-cover.png" 
                          alt="Cormeum Interface" 
                          loading="eager"
                          class="w-full h-full object-cover filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700">
@@ -305,15 +306,9 @@
 
         <!-- PROJECT 02: EMSADI -->
         <article class="swiss-grid md:min-h-screen items-center border-b-grid group">
-             <div class="col-span-12 md:col-span-8 h-[50vh] md:h-screen relative overflow-hidden img-container md:order-2 view-trigger cursor-pointer project-trigger" data-project="emsadi">
-                <div class="reveal-img w-full h-full">
-                    <img src="img/cormeum-cover-biology.png" 
-                         alt="EMSADI Network" 
-                         class="w-full h-full object-cover filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700">
-                </div>
-            </div>
-
-            <div class="col-span-12 md:col-span-4 p-8 md:p-12 md:border-l-grid flex flex-col justify-between h-full bg-neutral-950 z-10 transition-colors duration-500 group-hover:bg-neutral-900 md:order-1">
+            <!-- TEXT BLOCK (Standardized: Left) -->
+            <!-- Fixed structure: Text first, removed 'order' classes, added border-r-grid -->
+            <div class="col-span-12 md:col-span-4 p-8 md:p-12 border-r-grid flex flex-col justify-between h-full bg-neutral-950 z-10 transition-colors duration-500 group-hover:bg-neutral-900">
                 <div>
                     <span class="block text-xs font-mono text-orange-500 mb-4">02 / CASE STUDY</span>
                     <h2 class="text-5xl md:text-6xl text-white mb-4 hover-trigger project-trigger" data-project="emsadi">EMSADI <br> Collective</h2>
@@ -331,6 +326,16 @@
                     </button>
                 </div>
             </div>
+
+            <!-- IMAGE BLOCK (Standardized: Right) -->
+             <div class="col-span-12 md:col-span-8 h-[50vh] md:h-screen relative overflow-hidden img-container view-trigger cursor-pointer project-trigger" data-project="emsadi">
+                <!-- Added 'immediate' class here -->
+                <div class="reveal-img immediate w-full h-full">
+                    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=2670&auto=format&fit=crop" 
+                         alt="EMSADI Network" 
+                         class="w-full h-full object-cover filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700">
+                </div>
+            </div>
         </article>
 
         <!-- PROJECT 03: DESIGN.LAB -->
@@ -345,8 +350,9 @@
                 </div>
             </div>
             <div class="col-span-12 md:col-span-8 h-[40vh] md:h-full relative overflow-hidden img-container border-t md:border-t-0 view-trigger cursor-pointer project-trigger" data-project="designlab">
-                 <div class="reveal-img w-full h-full">
-                    <img src="img/cormeum-cover-biology.png" 
+                 <!-- Added 'immediate' class here -->
+                 <div class="reveal-img immediate w-full h-full">
+                    <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=2670&auto=format&fit=crop" 
                          alt="Workshop" 
                          class="w-full h-full object-cover filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700">
                  </div>
