@@ -49,7 +49,7 @@
             width: 60px;
             height: 60px;
             background: var(--orange);
-            mix-blend-mode: normal;
+            mix-blend-mode: normal; /* Optional: change blend mode on hover */
             opacity: 0.8;
         }
 
@@ -136,30 +136,24 @@
             background: url('https://grainy-gradients.vercel.app/noise.svg');
         }
 
-        /* --- CANVAS inside HEADER --- */
+        /* --- CANVAS (MODIFICADO: Position Absolute dentro del Header) --- */
         #bg-canvas {
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            z-index: 0; 
+            z-index: 0; /* Detrás del texto pero dentro del header */
             pointer-events: none;
         }
 
         header {
             position: relative;
-            overflow: hidden;
+            overflow: hidden; /* Corta el canvas si se sale */
         }
         
+        /* Aseguramos que el contenido del header esté por encima del canvas */
         header .swiss-grid, header .absolute {
             position: relative;
             z-index: 10;
-        }
-
-        /* PROJECT OVERLAY CARD GRID */
-        .overlay-grid {
-            display: grid;
-            grid-template-columns: repeat(12, minmax(0,1fr));
-            gap: 1.5rem;
         }
 
         /* Hover image zoom for static cards */
@@ -178,128 +172,25 @@
     <!-- CLAY CURSOR -->
     <div id="custom-cursor"></div>
 
-    <!-- PROJECT OVERLAY (SCROLL LAYOUT) -->
+    <!-- PROJECT OVERLAY (NEW SCROLL LAYOUT) -->
     <div id="project-overlay" class="fixed inset-0 z-[100] bg-black/60 opacity-0 pointer-events-none transition-opacity duration-500 backdrop-blur-3xl">
         
-        <!-- Close Button -->
+        <!-- Close Button (Fixed) -->
         <button id="close-overlay" class="absolute top-8 right-8 text-white text-xl z-[120] hover:text-orange-500 transition-colors uppercase font-mono tracking-widest cursor-pointer hover-trigger mix-blend-difference bg-black/20 px-4 py-2 rounded-full border border-white/10 backdrop-blur-md">
             Close [X]
         </button>
 
-        <!-- Scrollable Container -->
+        <!-- Scrollable Container (Transparent to let glass effect show) -->
         <div id="overlay-scroll-container" class="w-full h-full overflow-y-auto">
-            <div id="overlay-content" class="max-w-7xl mx-auto px-6 py-24 min-h-screen flex flex-col gap-16">
-                
-                <!-- Overlay Intro -->
-                <header class="flex flex-col gap-6 border-b border-white/10 pb-10">
-                    <div class="text-xs font-mono tracking-[0.25em] uppercase text-orange-500" id="overlay-type">
-                        Case Study
-                    </div>
-                    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-                        <div>
-                            <h2 id="overlay-title" class="text-4xl md:text-6xl lg:text-7xl serif italic text-white leading-none mb-4">
-                                Project Name
-                            </h2>
-                            <p id="overlay-subtitle" class="text-sm md:text-base text-neutral-400 max-w-xl">
-                                Short description of the project and the kind of design problem it solves.
-                            </p>
-                        </div>
-                        <div class="flex flex-wrap gap-3 text-[10px] uppercase tracking-[0.2em] text-neutral-400">
-                            <span id="overlay-tag-1" class="px-3 py-1 border border-neutral-700 rounded-full">Tag</span>
-                            <span id="overlay-tag-2" class="px-3 py-1 border border-neutral-700 rounded-full">Tag</span>
-                            <span id="overlay-year" class="px-3 py-1 border border-neutral-700 rounded-full">2024</span>
-                        </div>
-                    </div>
-                </header>
-
-                <!-- Overlay Body -->
-                <main class="flex flex-col gap-16">
-                    <!-- Hero Image -->
-                    <section id="overlay-hero" class="scroll-card rounded-[24px] border border-white/10 bg-gradient-to-b from-white/5 to-black/60 overflow-hidden img-container">
-                        <img id="overlay-hero-img" src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1600&auto=format&fit=crop" 
-                             alt="Project hero" 
-                             class="w-full h-[260px] md:h-[420px] object-cover">
-                    </section>
-
-                    <!-- Overview Grid -->
-                    <section class="overlay-grid scroll-card">
-                        <div class="col-span-12 md:col-span-7 flex flex-col gap-6">
-                            <div>
-                                <h3 class="text-xs font-mono tracking-[0.3em] uppercase text-orange-500 mb-3">Overview</h3>
-                                <p id="overlay-overview" class="text-sm md:text-base text-neutral-300 leading-relaxed">
-                                    High-level overview of the project, the context, and why it mattered.
-                                </p>
-                            </div>
-                            <div>
-                                <h3 class="text-xs font-mono tracking-[0.3em] uppercase text-orange-500 mb-3">My Role</h3>
-                                <p id="overlay-role" class="text-sm md:text-base text-neutral-400 leading-relaxed">
-                                    Product design, interaction design, visual systems, research facilitation.
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="col-span-12 md:col-span-5 flex flex-col gap-6">
-                            <div>
-                                <h3 class="text-xs font-mono tracking-[0.3em] uppercase text-orange-500 mb-3">Constraints</h3>
-                                <ul id="overlay-constraints" class="text-sm text-neutral-400 space-y-1 list-disc list-inside">
-                                    <li>Regulated environment.</li>
-                                    <li>High-risk tasks.</li>
-                                    <li>Cross-functional team.</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h3 class="text-xs font-mono tracking-[0.3em] uppercase text-orange-500 mb-3">Impact</h3>
-                                <p id="overlay-impact" class="text-sm text-neutral-300 leading-relaxed">
-                                    Short impact statement with measurable or structural outcomes.
-                                </p>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Gallery / Screens -->
-                    <section class="scroll-card">
-                        <h3 class="text-xs font-mono tracking-[0.3em] uppercase text-orange-500 mb-4">System in context</h3>
-                        <div id="overlay-gallery" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <!-- Cards injected by JS -->
-                        </div>
-                    </section>
-
-                    <!-- Design Principles -->
-                    <section class="scroll-card border border-white/10 rounded-[24px] p-8 md:p-10 bg-black/40">
-                        <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-8">
-                            <div class="md:w-1/3">
-                                <h3 class="text-xs font-mono tracking-[0.3em] uppercase text-orange-500 mb-3">Design Principles</h3>
-                                <p class="text-sm text-neutral-400">
-                                    A snapshot of the rules that guided the interface and interaction decisions.
-                                </p>
-                            </div>
-                            <div class="md:w-2/3 grid grid-cols-1 md:grid-cols-3 gap-6">
-                                <div>
-                                    <h4 class="text-sm font-semibold text-white mb-1">Manage risk visually</h4>
-                                    <p class="text-xs text-neutral-400">Surface exceptions, not everything at once.</p>
-                                </div>
-                                <div>
-                                    <h4 class="text-sm font-semibold text-white mb-1">Respect mental models</h4>
-                                    <p class="text-xs text-neutral-400">Align to how clinicians already think and act.</p>
-                                </div>
-                                <div>
-                                    <h4 class="text-sm font-semibold text-white mb-1">Compress complexity</h4>
-                                    <p class="text-xs text-neutral-400">Make dense signals legible at a glance.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                </main>
-
-                <!-- Overlay Footer -->
-                <footer class="pt-8 border-t border-white/10 flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-xs text-neutral-500">
-                    <span>Back to projects</span>
-                    <span class="font-mono tracking-[0.2em] uppercase text-neutral-600">Franco Aguilera — Human-Centered Designer</span>
-                </footer>
+            <div id="overlay-content" class="max-w-7xl mx-auto px-6 py-24 min-h-screen flex flex-col gap-24 relative">
+                <!-- Content will be injected here via JS -->
             </div>
+            
+            <!-- Footer spacing -->
+            <div class="h-32 w-full"></div>
         </div>
     </div>
-
+    
     <!-- NOISE OVERLAY -->
     <div class="noise"></div>
 
@@ -323,10 +214,12 @@
 
     <!-- HERO SECTION -->
     <header class="min-h-screen flex flex-col justify-center px-4 md:px-12 relative border-b-grid">
-        <!-- Canvas background inside header -->
+        
+        <!-- CANVAS BACKGROUND (MOVED INSIDE HEADER) -->
         <canvas id="bg-canvas"></canvas>
 
-        <div class="swiss-grid pb-12">
+        <!-- Added pb-24 to lift content up away from bottom scroll indicator -->
+        <div class="swiss-grid pb-24">
             <div class="col-span-12 md:col-span-10 md:col-start-1">
                 <div class="reveal-text immediate">
                     <h1 class="mega-text font-normal text-white mb-6">
@@ -335,18 +228,21 @@
                     </h1>
                 </div>
             </div>
-            <div class="col-span-12 md:col-span-6 md:col-start-1 mt-8">
+            <!-- Changed mt-8 to mt-12 for better separation -->
+            <div class="col-span-12 md:col-span-6 md:col-start-1 mt-12">
                 <div class="reveal-text immediate" style="animation-delay: 0.2s;">
                     <p class="text-xl md:text-2xl font-light text-neutral-400 leading-relaxed border-l border-orange-500 pl-6 hover-trigger">
-                        Human-centered designer who likes hard problems, regulated spaces, and making things safe enough to trust.
+                    Human-centered designer who likes hard problems, regulated spaces, and making things safe enough to trust.
                     </p>
                 </div>
             </div>
         </div>
 
-        <div class="absolute bottom-12 left-12 flex items-center gap-4 animate-pulse">
+        <div class="absolute bottom-12 left-[1.5rem] md:left-[3rem] flex items-center gap-4 animate-pulse">
             <i class="fas fa-arrow-down text-orange-500"></i>
-            <span class="text-xs font-mono tracking-widest uppercase text-neutral-500">Scroll to Explore</span>
+            <span class="text-xs font-mono tracking-widest uppercase text-neutral-500 pt-0.5 leading-none">
+                Scroll to Explore
+            </span>
         </div>
     </header>
 
@@ -384,9 +280,10 @@
                     </button>
                 </div>
             </div>
+
             <div class="col-span-12 md:col-span-8 h-[50vh] md:h-screen relative overflow-hidden img-container view-trigger cursor-pointer project-trigger" data-project="cormeum">
                 <div class="reveal-img w-full h-full">
-                    <img src="img/cormeum-cover.png"
+                    <img src="https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=988&auto=format&fit=crop" 
                          alt="Cormeum Interface" 
                          class="w-full h-full object-cover filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700">
                     
@@ -400,7 +297,7 @@
 
         <!-- PROJECT 02: EMSADI -->
         <article class="swiss-grid md:min-h-screen items-center border-b-grid group">
-            <div class="col-span-12 md:col-span-8 h-[50vh] md:h-screen relative overflow-hidden img-container md:order-2 view-trigger cursor-pointer project-trigger" data-project="emsadi">
+             <div class="col-span-12 md:col-span-8 h-[50vh] md:h-screen relative overflow-hidden img-container md:order-2 view-trigger cursor-pointer project-trigger" data-project="emsadi">
                 <div class="reveal-img w-full h-full">
                     <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=2670&auto=format&fit=crop" 
                          alt="EMSADI Network" 
@@ -440,15 +337,14 @@
                 </div>
             </div>
             <div class="col-span-12 md:col-span-8 h-[40vh] md:h-full relative overflow-hidden img-container border-t md:border-t-0 view-trigger cursor-pointer project-trigger" data-project="designlab">
-                <div class="reveal-img w-full h-full">
+                 <div class="reveal-img w-full h-full">
                     <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=2670&auto=format&fit=crop" 
                          alt="Workshop" 
                          class="w-full h-full object-cover filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700">
-                </div>
+                 </div>
             </div>
         </article>
 
-        <!-- OTHER PROJECTS SHORT CARDS -->
         <div class="swiss-grid">
             <div class="col-span-12 md:col-span-6 border-r-grid p-12 hover:bg-white/5 transition-colors group hover-trigger">
                 <i class="fas fa-hand-sparkles text-3xl text-neutral-600 mb-6 group-hover:text-orange-500 transition-colors"></i>
@@ -463,7 +359,6 @@
         </div>
     </main>
 
-    <!-- ABOUT / METHOD -->
     <section id="about" class="py-24 border-t-grid relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-6">
             <div class="swiss-grid border-none">
@@ -494,7 +389,6 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
     <footer class="border-t-grid py-24 bg-orange-600 text-black">
         <div class="max-w-7xl mx-auto px-6 text-center">
             <h2 class="text-4xl md:text-8xl font-normal mb-8 serif">Let's Talk.</h2>
@@ -510,34 +404,362 @@
     </footer>
 
     <script>
-        // --- PROJECT DATA FOR OVERLAY (from first code copy) ---
+        // --- DATA ---
         const projectData = {
             cormeum: {
                 title: "Cormeum Tech",
-                type: "Case Study",
-                hero: "img/cormeum-cover.png",
-                subtitle: "Biomedical device interface that makes complex cell culture behavior legible for drug testing.",
-                tags: ["MedTech", "Embedded UI"],
-                year: "2024",
-                overview: "Designed the product interface, user experience, and visual identity for a biomedical device that mimics physiological conditions for drug testing, turning complex biotech behavior into clear, usable interactions.",
-                role: "Product design, interaction design, visual identity, information architecture.",
-                constraints: [
-                    "Highly technical, biotech-heavy mental models.",
-                    "Embedded hardware and limited screen real estate.",
-                    "Regulated space and safety requirements."
-                ],
-                impact: "Turned a lab-grade prototype into a usable system that let teams monitor and adjust experiments without getting lost in the complexity.",
-                gallery: [
-                    {
-                        title: "System dashboard",
-                        desc: "High-level view with 'management by exception': the system stays quiet until parameters deviate.",
-                        img: "img/built-for-complexity.png"
-                    },
-                    {
-                        title: "Culture configuration",
-                        desc: "Configuration flows that keep biotech jargon but structure decisions into safe patterns.",
-                        img: "img/cell-culture.png"
-                    },
-                    {
-                        title: "Experiment timeline",
-                        desc: "Visual summaries that compress long-running experiments into legible timeline
+                desc: "Medical Device / Embedded UI",
+                images: [
+                    "https://images.unsplash.com/photo-1576086213369-97a306d36557?q=80&w=1200&auto=format&fit=crop", 
+                    "https://images.unsplash.com/photo-1530210124550-912dc1381cb8?q=80&w=1200&auto=format&fit=crop"
+                ]
+            },
+            emsadi: {
+                title: "EMSADI Collective",
+                desc: "Digital Health / Systems",
+                images: [
+                    "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=1200&auto=format&fit=crop", 
+                    "https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=1200&auto=format&fit=crop"
+                ]
+            },
+            designlab: {
+                title: "Design.Lab",
+                desc: "Education / Methodology",
+                images: [
+                    "https://images.unsplash.com/photo-1509395062183-67c5ad6faff9?q=80&w=1200&auto=format&fit=crop", 
+                    "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop"
+                ]
+            }
+        };
+
+        const overlay = document.getElementById('project-overlay');
+        const overlayContent = document.getElementById('overlay-content');
+        const closeBtn = document.getElementById('close-overlay');
+        // FIX: Grab scroll container directly
+        const overlayScrollContainer = document.getElementById('overlay-scroll-container');
+
+        // Scroll Observer for Overlay Cards
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // --- OPEN OVERLAY FUNCTION ---
+        function openProjectOverlay(projectId) {
+            const data = projectData[projectId];
+            if (!data) return;
+
+            // 1. Reset Content
+            overlayContent.innerHTML = '';
+            
+            // FIX: Reset scroll position to top
+            if(overlayScrollContainer) overlayScrollContainer.scrollTop = 0;
+
+            // 2. Build Card Structure
+            const heroCard = `
+                <div class="scroll-card w-full max-w-4xl self-center text-center mt-12 mb-12">
+                    <h2 class="text-6xl md:text-9xl serif italic text-orange-500 mb-4 leading-none">${data.title}</h2>
+                    <p class="text-sm font-mono text-neutral-400 uppercase tracking-widest">${data.desc}</p>
+                </div>
+            `;
+            const textCard1 = `
+                <div class="scroll-card max-w-lg self-start bg-neutral-950 p-8 md:p-12 rounded-3xl border border-white/5 shadow-2xl relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-1 h-full bg-orange-500 transform scale-y-0 group-hover:scale-y-100 transition-transform duration-500"></div>
+                    <h4 class="text-xl text-white font-bold mb-4">Overview</h4>
+                    <p class="text-neutral-400 leading-relaxed">
+                        A deep dive into the ${data.title} ecosystem. We focused on reducing cognitive load for operators while maintaining high-fidelity data visualization. The goal was clarity in high-stress environments.
+                    </p>
+                </div>
+            `;
+            const imgCard1 = `
+                <div class="scroll-card max-w-4xl w-full self-end bg-neutral-950 p-2 rounded-3xl border border-white/5 shadow-2xl">
+                    <img src="${data.images[0]}" class="w-full h-auto rounded-2xl object-cover aspect-[16/9] opacity-90 hover:opacity-100 transition-opacity">
+                    <div class="p-4 flex justify-between items-center">
+                        <span class="text-xs font-mono text-neutral-500">FIG 01. INTERFACE LAYOUT</span>
+                        <i class="fas fa-expand text-neutral-500"></i>
+                    </div>
+                </div>
+            `;
+            const textCard2 = `
+                <div class="scroll-card max-w-2xl self-center text-center bg-neutral-900/50 p-12 rounded-3xl backdrop-blur-sm border border-white/5 my-12">
+                    <i class="fas fa-quote-left text-4xl text-orange-500 mb-6 opacity-50"></i>
+                    <p class="text-2xl text-white serif italic leading-relaxed">
+                        "Design isn't just about how it looks, but how it safeguards the user against critical errors."
+                    </p>
+                </div>
+            `;
+            const comboCard = `
+                <div class="scroll-card max-w-5xl w-full self-start grid md:grid-cols-2 gap-8 bg-neutral-950 p-8 rounded-3xl border border-white/5 shadow-2xl items-center">
+                    <img src="${data.images[1]}" class="w-full h-full rounded-xl object-cover min-h-[300px]">
+                    <div>
+                        <h4 class="text-2xl text-white font-bold mb-4">Technical Execution</h4>
+                        <ul class="space-y-4 text-neutral-400">
+                            <li class="flex items-start gap-3"><span class="text-orange-500 mt-1">01</span> Accessibility compliance (WCAG 2.1)</li>
+                            <li class="flex items-start gap-3"><span class="text-orange-500 mt-1">02</span> Real-time data latency < 50ms</li>
+                            <li class="flex items-start gap-3"><span class="text-orange-500 mt-1">03</span> Modular component architecture</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+            const closingCard = `
+                <div class="scroll-card max-w-3xl self-center text-center mt-24">
+                    <h3 class="text-4xl md:text-6xl text-white font-bold mb-8">Ready to scale?</h3>
+                    <a href="mailto:designiofranco@gmail.com" class="inline-block bg-orange-600 text-black px-8 py-4 rounded-full font-bold text-lg hover:bg-white transition-colors">
+                        Discuss this Project
+                    </a>
+                </div>
+            `;
+
+            overlayContent.innerHTML = heroCard + textCard1 + imgCard1 + textCard2 + comboCard + closingCard;
+            overlay.classList.remove('pointer-events-none', 'opacity-0');
+            document.body.style.overflow = 'hidden';
+
+            document.querySelectorAll('#overlay-content .scroll-card').forEach(el => {
+                scrollObserver.observe(el);
+            });
+        }
+
+        function closeOverlay() {
+            overlay.classList.add('pointer-events-none', 'opacity-0');
+            document.body.style.overflow = '';
+            setTimeout(() => {
+                overlayContent.innerHTML = '';
+            }, 500);
+        }
+
+        document.querySelectorAll('.project-trigger').forEach(trigger => {
+            trigger.addEventListener('click', (e) => {
+                const projectId = trigger.getAttribute('data-project');
+                openProjectOverlay(projectId);
+            });
+        });
+
+        closeBtn.addEventListener('click', closeOverlay);
+
+        // --- CURSOR ---
+        const cursor = document.getElementById('custom-cursor');
+        let cMouseX = window.innerWidth / 2, cMouseY = window.innerHeight / 2;
+        let cCursorX = window.innerWidth / 2, cCursorY = window.innerHeight / 2;
+        
+        document.addEventListener('mousemove', (e) => { cMouseX = e.clientX; cMouseY = e.clientY; });
+
+        function animateCursor() {
+            const distX = cMouseX - cCursorX;
+            const distY = cMouseY - cCursorY;
+            cCursorX += distX * 0.15;
+            cCursorY += distY * 0.15;
+            
+            const vel = Math.sqrt(distX*distX + distY*distY);
+            const scale = Math.min(vel * 0.005, 0.5);
+            const angle = Math.atan2(distY, distX) * 180 / Math.PI;
+            
+            cursor.style.left = `${cCursorX}px`;
+            cursor.style.top = `${cCursorY}px`;
+            
+            if (vel > 1) {
+                cursor.style.transform = `translate(-50%, -50%) rotate(${angle}deg) scale(${1+scale}, ${1-scale})`;
+                cursor.style.borderRadius = "40% 60% 40% 60% / 60% 40% 60% 40%";
+            } else {
+                cursor.style.transform = `translate(-50%, -50%) scale(1)`;
+                cursor.style.borderRadius = "50%";
+            }
+            requestAnimationFrame(animateCursor);
+        }
+        animateCursor();
+
+        const interactives = 'a, button, .hover-trigger, .parallax-wrapper, .view-trigger';
+        document.querySelectorAll(interactives).forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('active'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.reveal-text.immediate').forEach(el => {
+                el.classList.add('active');
+            });
+        });
+
+        // --- 3D TYPOGRAPHIC NEURAL NETWORK (SPHERICAL) ---
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let nodes = [];
+        let mouse = { x: 0, y: 0 };
+        let mouseScreen = { x: 0, y: 0 }; // Nueva variable para coordenadas de pantalla
+        
+        // 3D Settings MODIFIED
+        const GLOBE_RADIUS = 220; // Más pequeña (antes 300)
+        const FOCAL_LENGTH = 400; 
+        
+        // Rotation state
+        let angleX = 0;
+        let angleY = 0;
+
+        window.addEventListener('mousemove', (e) => {
+            // Normalizar coordenadas del mouse (-1 a 1) para rotación global MUY LENTA
+            mouse.x = (e.clientX - width/2) * 0.000008; // Factor muy reducido
+            mouse.y = (e.clientY - height/2) * 0.000008;
+
+            // Guardar posición real para el efecto local
+            mouseScreen.x = e.clientX;
+            mouseScreen.y = e.clientY;
+        });
+
+        const chars = ['A', 'a', 'B', 'b', 'X', 'Y', 'Z', '0', '1', 'f', 'g', 'i', 'M', 'N'];
+        const fonts = ['Instrument Serif', 'Clash Grotesk'];
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            initNodes();
+        }
+        window.addEventListener('resize', resize);
+        
+        class Node3D {
+            constructor() {
+                // Posicionamiento esférico
+                const theta = Math.random() * Math.PI * 2; // Ángulo plano
+                const phi = Math.acos((Math.random() * 2) - 1); // Ángulo de elevación
+                
+                // Convertir coordenadas esféricas a cartesianas 3D
+                this.x = GLOBE_RADIUS * Math.sin(phi) * Math.cos(theta);
+                this.y = GLOBE_RADIUS * Math.sin(phi) * Math.sin(theta);
+                this.z = GLOBE_RADIUS * Math.cos(phi);
+                
+                // Propiedades visuales
+                this.char = chars[Math.floor(Math.random() * chars.length)];
+                this.font = fonts[Math.floor(Math.random() * fonts.length)];
+                this.fontSizeBase = Math.random() * 8 + 10; 
+                
+                // Variables para la animación
+                this.currentX = 0;
+                this.currentY = 0;
+                this.scale = 0;
+            }
+
+            update(rotationX, rotationY) {
+                // 1. Rotación en eje Y
+                let y1 = this.y * Math.cos(rotationX) - this.z * Math.sin(rotationX);
+                let z1 = this.z * Math.cos(rotationX) + this.y * Math.sin(rotationX);
+                
+                // 2. Rotación en eje X
+                let x2 = this.x * Math.cos(rotationY) - z1 * Math.sin(rotationY);
+                let z2 = z1 * Math.cos(rotationY) + this.x * Math.sin(rotationY);
+
+                // 3. Proyección 3D a 2D
+                // Factor de escala basado en la profundidad (z)
+                let depth = FOCAL_LENGTH / (FOCAL_LENGTH - z2);
+                
+                this.currentX = x2 * depth + width/2;
+                this.currentY = y1 * depth + height/2;
+                this.scale = depth;
+                
+                // Guardamos Z transformado para opacidad
+                this.depthZ = z2;
+
+                // 4. PERTURBACIÓN LOCAL SUAVE
+                // Calculamos distancia en pantalla
+                let dx = this.currentX - mouseScreen.x;
+                let dy = this.currentY - mouseScreen.y;
+                let dist = Math.sqrt(dx*dx + dy*dy);
+
+                // Si está cerca del mouse (< 150px)
+                if (dist < 150) {
+                    let force = (150 - dist) / 150;
+                    // Empujamos suavemente el nodo lejos del mouse
+                    this.currentX += (dx/dist) * force * 20; 
+                    this.currentY += (dy/dist) * force * 20;
+                }
+            }
+
+            draw() {
+                // Solo dibujamos si está "delante" o no muy lejos (para evitar clipping feo)
+                if (this.scale < 0) return;
+
+                ctx.save();
+                ctx.translate(this.currentX, this.currentY);
+                ctx.scale(this.scale, this.scale);
+                
+                ctx.font = `${this.fontSizeBase}px "${this.font}"`;
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                
+                // Opacidad basada en profundidad (Fog effect)
+                // Más atrás = más transparente
+                let alpha = (this.scale - 0.5) * 0.3; // Ajuste fino
+                if (alpha < 0) alpha = 0;
+                if (alpha > 0.15) alpha = 0.15; // Límite máximo (sutil)
+
+                ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+                ctx.fillText(this.char, 0, 0);
+                
+                ctx.restore();
+            }
+        }
+
+        function initNodes() {
+            nodes = [];
+            const nodeCount = 50; // Cantidad fija para la esfera
+            for (let i = 0; i < nodeCount; i++) {
+                nodes.push(new Node3D());
+            }
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+
+            // Rotación automática MUY SUAVE + influencia del mouse
+            angleX += 0.000003 + mouse.y; // Base speed reducida
+            angleY += 0.000003 + mouse.x;
+
+            // Primero actualizamos posiciones
+            nodes.forEach(node => node.update(angleX, angleY));
+            
+            // Dibujar CONEXIONES (Líneas)
+            // Solo conectamos nodos cercanos en el espacio 3D para mantener la estructura
+            ctx.beginPath();
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    // Calculamos distancia real proyectada en pantalla 2D
+                    // Usar distancia 2D da un efecto visual más interesante de "red" en pantalla
+                    const dx = nodes[i].currentX - nodes[j].currentX;
+                    const dy = nodes[i].currentY - nodes[j].currentY;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+
+                    // Umbral de conexión
+                    if (dist < 120) {
+                        // Opacidad basada en la profundidad media de ambos puntos
+                        const avgScale = (nodes[i].scale + nodes[j].scale) / 2;
+                        let alpha = (1 - dist / 120) * 0.05 * avgScale;
+                        
+                        if (alpha > 0) {
+                            ctx.moveTo(nodes[i].currentX, nodes[i].currentY);
+                            ctx.lineTo(nodes[j].currentX, nodes[j].currentY);
+                            ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+                        }
+                    }
+                }
+            }
+            ctx.stroke(); // Dibujamos todas las líneas de una vez para rendimiento
+
+            // Dibujar NODOS (Letras)
+            nodes.forEach(node => node.draw());
+
+            requestAnimationFrame(animateCanvas);
+        }
+
+        // Iniciar
+        resize();
+        animateCanvas();
+
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+        }, observerOptions);
+        document.querySelectorAll('.reveal-text:not(.immediate), .reveal-img').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
