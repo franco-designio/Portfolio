@@ -13,9 +13,14 @@
     <style>
         /* --- CORE SETTINGS --- */
         :root {
-            --orange: #FF4D00; /* International Orange 00E5ED #FF4D00 */
-            --dark: #050505; /* 050505 */
+            --orange: #FF4D00; /* Original International Orange */
+            --dark: #050505;
+            --text-main: #e5e5e5;
+            --text-muted: #a3a3a3;
             --grid-line: rgba(255, 255, 255, 0.1);
+            --canvas-opacity: 0.15;
+            --card-bg: #0a0a0a;
+            --card-hover: #171717;
         }
 
         body {
@@ -25,6 +30,32 @@
             overflow-x: hidden;
             cursor: none; /* Hide default cursor */
         }
+
+            body.light-mode {
+            --orange: #00E5ED; /* Negative Teal */
+            --dark: #f2f2f2;
+            --text-main: #1a1a1a;
+            --text-muted: #525252;
+            --grid-line: rgba(0, 0, 0, 0.1);
+            --canvas-opacity: 0.4;
+            --card-bg: #ffffff;
+            --card-hover: #e5e5e5;
+        }
+        
+        /* --- THEME OVERRIDES --- */
+        .light-mode .text-white, 
+        .light-mode .text-neutral-400 { color: var(--text-main) !important; }
+        .light-mode .text-neutral-500, 
+        .light-mode .text-neutral-600 { color: var(--text-muted) !important; }
+        .light-mode .bg-neutral-950 { background-color: var(--card-bg) !important; }
+        .light-mode .bg-neutral-900 { background-color: var(--card-hover) !important; }
+        .light-mode .text-orange-500 { color: var(--orange) !important; }
+        .light-mode .bg-orange-600 { background-color: var(--orange) !important; }
+        .light-mode .border-neutral-700,
+        .light-mode .border-neutral-800, 
+        .light-mode .border-white\/5 { border-color: var(--grid-line) !important; }
+        .light-mode .selection\:bg-orange-600::selection { background-color: var(--orange); }
+        .light-mode .mix-blend-difference { mix-blend-mode: multiply; color: black; }
 
         h1, h2, h3, .serif { font-family: 'Instrument Serif', serif; }
 
