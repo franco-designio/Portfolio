@@ -795,7 +795,15 @@
 
         closeBtn.addEventListener('click', closeOverlay);
 
-        // --- CURSOR ---
+// Theme Toggle Logic
+        const modeToggle = document.getElementById('mode-toggle');
+        modeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            modeToggle.innerText = isLight ? '[ MODE: LIGHT ]' : '[ MODE: DARK ]';
+        });
+
+                // --- CURSOR ---
         const cursor = document.getElementById('custom-cursor');
         let cMouseX = window.innerWidth / 2, cMouseY = window.innerHeight / 2;
         let cCursorX = window.innerWidth / 2, cCursorY = window.innerHeight / 2;
@@ -931,31 +939,17 @@
                 }
             }
 
-            draw() {
-                // Solo dibujamos si está "delante" o no muy lejos (para evitar clipping feo)
-                if (this.scale < 0) return;
+draw() {
+            if (this.scale < 0) return;
+            const bodyStyles = getComputedStyle(document.body);
+            const opacityVal = parseFloat(bodyStyles.getPropertyValue('--canvas-opacity'));
+            const isLight = document.body.classList.contains('light-mode');
 
-                ctx.save();
-                ctx.translate(this.currentX, this.currentY);
-                ctx.scale(this.scale, this.scale);
-                
-                ctx.font = `${this.fontSizeBase}px "${this.font}"`;
-                ctx.textAlign = "center";
-                ctx.textBaseline = "middle";
-                
-                // Opacidad basada en profundidad (Fog effect)
-                // Más atrás = más transparente
-                let alpha = (this.scale - 0.5) * 0.3; // Ajuste fino
-                if (alpha < 0) alpha = 0;
-                if (alpha > 0.15) alpha = 0.15; // Límite máximo (sutil)
-
-                ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
-                ctx.fillText(this.char, 0, 0);
-                
-                ctx.restore();
-            }
+            ctx.fillStyle = `rgba(${isLight ? '0,0,0' : '255,255,255'}, ${Math.max(0, Math.min((this.scale - 0.5) * opacityVal, 0.4))})`;
+            ctx.font = `${12 * this.scale}px Clash Grotesk`;
+            ctx.textAlign = "center";
+            ctx.fillText(this.char, this.currentX, this.currentY);
         }
-
         function initNodes() {
             nodes = [];
             const nodeCount = 50; // Cantidad fija para la esfera
