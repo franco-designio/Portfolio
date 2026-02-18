@@ -9,18 +9,15 @@
     <!-- Fonts -->
     <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@200,300,400,500,600,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-    
+
     <style>
         /* --- CORE SETTINGS --- */
         :root {
-            --orange: #FF4D00; /* Original International Orange */
-            --dark: #050505;
-            --text-main: #e5e5e5;
-            --text-muted: #a3a3a3;
+            --orange: #FF4D00; /* International Orange */
+            --dark: #050505; /* 050505 */
+            --orange: #FF4D00; /* International Orange  */
+            --dark: #050505; /* 050505 */
             --grid-line: rgba(255, 255, 255, 0.1);
-            --canvas-opacity: 0.15;
-            --card-bg: #0a0a0a;
-            --card-hover: #171717;
         }
 
         body {
@@ -30,32 +27,6 @@
             overflow-x: hidden;
             cursor: none; /* Hide default cursor */
         }
-
-            body.light-mode {
-            --orange: #00E5ED; /* Negative Teal */
-            --dark: #f2f2f2;
-            --text-main: #1a1a1a;
-            --text-muted: #525252;
-            --grid-line: rgba(0, 0, 0, 0.1);
-            --canvas-opacity: 0.4;
-            --card-bg: #ffffff;
-            --card-hover: #e5e5e5;
-        }
-        
-        /* --- THEME OVERRIDES --- */
-        .light-mode .text-white, 
-        .light-mode .text-neutral-400 { color: var(--text-main) !important; }
-        .light-mode .text-neutral-500, 
-        .light-mode .text-neutral-600 { color: var(--text-muted) !important; }
-        .light-mode .bg-neutral-950 { background-color: var(--card-bg) !important; }
-        .light-mode .bg-neutral-900 { background-color: var(--card-hover) !important; }
-        .light-mode .text-orange-500 { color: var(--orange) !important; }
-        .light-mode .bg-orange-600 { background-color: var(--orange) !important; }
-        .light-mode .border-neutral-700,
-        .light-mode .border-neutral-800, 
-        .light-mode .border-white\/5 { border-color: var(--grid-line) !important; }
-        .light-mode .selection\:bg-orange-600::selection { background-color: var(--orange); }
-        .light-mode .mix-blend-difference { mix-blend-mode: multiply; color: black; }
 
         h1, h2, h3, .serif { font-family: 'Instrument Serif', serif; }
 
@@ -93,7 +64,7 @@
         .border-r-grid { border-right: 1px solid var(--grid-line); }
         .border-l-grid { border-left: 1px solid var(--grid-line); }
         .border-t-grid { border-top: 1px solid var(--grid-line); }
-        
+
         /* --- ANIMATIONS --- */
         .reveal-text {
             clip-path: inset(0 0 100% 0);
@@ -144,7 +115,7 @@
             filter: blur(4px);
             transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        
+
         .scroll-card.is-visible {
             opacity: 1;
             transform: translateY(0);
@@ -186,7 +157,7 @@
             position: relative;
             overflow: hidden; /* Corta el canvas si se sale */
         }
-        
+
         /* Aseguramos que el contenido del header esté por encima del canvas */
         header .swiss-grid, header .absolute {
             position: relative;
@@ -199,7 +170,7 @@
         .img-container:hover img { transform: scale(1.05); }
 
         .mega-text { font-size: clamp(3rem, 8vw, 9rem); line-height: 0.9; }
-        
+
         /* Utility */
         .hover-trigger { cursor: none; } 
     </style>
@@ -211,7 +182,7 @@
 
     <!-- PROJECT OVERLAY (NEW SCROLL LAYOUT) -->
     <div id="project-overlay" class="fixed inset-0 z-[100] bg-black/60 opacity-0 pointer-events-none transition-opacity duration-500 backdrop-blur-3xl">
-        
+
         <!-- Close Button (Fixed) -->
         <button id="close-overlay" class="absolute top-8 right-8 text-white text-xl z-[120] hover:text-orange-500 transition-colors uppercase font-mono tracking-widest cursor-pointer hover-trigger mix-blend-difference bg-black/20 px-4 py-2 rounded-full border border-white/10 backdrop-blur-md">
             Close [X]
@@ -222,12 +193,12 @@
             <div id="overlay-content" class="max-w-7xl mx-auto px-6 py-24 min-h-screen flex flex-col gap-24 relative">
                 <!-- Content will be injected here via JS -->
             </div>
-            
+
             <!-- Footer spacing -->
             <div class="h-32 w-full"></div>
         </div>
     </div>
-    
+
     <!-- NOISE OVERLAY -->
     <div class="noise"></div>
 
@@ -250,7 +221,7 @@
 
     <!-- HERO SECTION -->
     <header class="min-h-screen flex flex-col justify-center px-4 md:px-12 relative border-b-grid">
-        
+
         <!-- CANVAS BACKGROUND (MOVED INSIDE HEADER) -->
         <canvas id="bg-canvas"></canvas>
 
@@ -295,7 +266,7 @@
 
     <!-- WORK SECTION -->
     <main id="work">
-        
+
         <!-- PROJECT 01: CORMEUM -->
         <article class="swiss-grid md:min-h-screen items-center border-b-grid group">
             <!-- TEXT BLOCK (Standardized: Left) -->
@@ -325,13 +296,13 @@
                          alt="Cormeum Interface" 
                          loading="eager"
                          class="w-full h-full object-cover filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700">
-                    
+
                <!--  STRATEGIC INSIGHT
                     <div class="absolute bottom-0 left-0 p-8 bg-black/80 backdrop-blur-md border-t border-r border-white/10 pointer-events-none">
                         <div class="text-xs font-mono text-orange-500 mb-1">STRATEGIC INSIGHT</div>
                         <p class="text-sm text-white max-w-xs">Management by exception: System remains neutral until parameters deviate.</p>
                     </div> -->
-                    
+
                 </div>
             </div>
         </article>
@@ -426,7 +397,7 @@
                     </h2>
                 </div>
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
                 <div class="border-t border-neutral-800 pt-6">
                     <span class="text-orange-500 text-xs font-mono mb-2 block">01</span>
@@ -515,13 +486,13 @@
             function openProjectOverlay(projectId) {
                 const data = projectData[projectId];
                 if (!data) return;
-            
+
                 // 1. Reset Content
                 overlayContent.innerHTML = '';
-                
+
                 // FIX: Reset scroll position to top
                 if(overlayScrollContainer) overlayScrollContainer.scrollTop = 0;
-            
+
                 // 2. Build Card Structure with PROJECT-SPECIFIC CONTENT
                 const heroCard = `
                     <div class="scroll-card w-full max-w-4xl self-center text-center mt-12 mb-12">
@@ -529,10 +500,10 @@
                         <p class="text-sm font-mono text-neutral-400 uppercase tracking-widest">${data.desc}</p>
                     </div>
                 `;
-            
+
                 // Define project-specific content
                 let textCard1, textCard2, comboCard, closingCard;
-            
+
                 if (projectId === 'cormeum') {
                     textCard1 = `
                         <div class="scroll-card max-w-lg self-start bg-neutral-950 p-8 md:p-12 rounded-3xl border border-white/5 shadow-2xl relative overflow-hidden group">
@@ -627,7 +598,7 @@
                         </div>
                     `;
                 }
-            
+
                 // Image slideshow card with auto-play and dots
                 const imgCard1 = `
                     <div class="scroll-card max-w-4xl w-full self-end bg-neutral-950 p-2 rounded-3xl border border-white/5 shadow-2xl">
@@ -666,7 +637,7 @@
                         </div>
                     </div>
                 `;
-            
+
                 // Common closing card
                 const closingCardHTML = `
                     <div class="scroll-card max-w-3xl self-center text-center mt-24">
@@ -676,7 +647,7 @@
                         </a>
                     </div>
                 `;
-            
+
                 // 3. Inject content
                 overlayContent.innerHTML = heroCard + textCard1 + imgCard1 + textCard2 + comboCard + closingCardHTML;
                 overlay.classList.remove('pointer-events-none', 'opacity-0');
@@ -771,7 +742,7 @@
 
                     // Call initSlideshow
                     initSlideshow();
-            
+
                 // 4. Observe for scroll animations
                 document.querySelectorAll('#overlay-content .scroll-card').forEach(el => {
                     scrollObserver.observe(el);
@@ -795,19 +766,11 @@
 
         closeBtn.addEventListener('click', closeOverlay);
 
-// Theme Toggle Logic
-        const modeToggle = document.getElementById('mode-toggle');
-        modeToggle.addEventListener('click', () => {
-            document.body.classList.toggle('light-mode');
-            const isLight = document.body.classList.contains('light-mode');
-            modeToggle.innerText = isLight ? '[ MODE: LIGHT ]' : '[ MODE: DARK ]';
-        });
-
-                // --- CURSOR ---
+        // --- CURSOR ---
         const cursor = document.getElementById('custom-cursor');
         let cMouseX = window.innerWidth / 2, cMouseY = window.innerHeight / 2;
         let cCursorX = window.innerWidth / 2, cCursorY = window.innerHeight / 2;
-        
+
         document.addEventListener('mousemove', (e) => { cMouseX = e.clientX; cMouseY = e.clientY; });
 
         function animateCursor() {
@@ -815,14 +778,14 @@
             const distY = cMouseY - cCursorY;
             cCursorX += distX * 0.15;
             cCursorY += distY * 0.15;
-            
+
             const vel = Math.sqrt(distX*distX + distY*distY);
             const scale = Math.min(vel * 0.005, 0.5);
             const angle = Math.atan2(distY, distX) * 180 / Math.PI;
-            
+
             cursor.style.left = `${cCursorX}px`;
             cursor.style.top = `${cCursorY}px`;
-            
+
             if (vel > 1) {
                 cursor.style.transform = `translate(-50%, -50%) rotate(${angle}deg) scale(${1+scale}, ${1-scale})`;
                 cursor.style.borderRadius = "40% 60% 40% 60% / 60% 40% 60% 40%";
@@ -853,11 +816,11 @@
         let nodes = [];
         let mouse = { x: 0, y: 0 };
         let mouseScreen = { x: 0, y: 0 }; // Nueva variable para coordenadas de pantalla
-        
+
         // 3D Settings MODIFIED
         const GLOBE_RADIUS = 220; // Más pequeña (antes 300)
         const FOCAL_LENGTH = 400; 
-        
+
         // Rotation state
         let angleX = 0;
         let angleY = 0;
@@ -881,23 +844,23 @@
             initNodes();
         }
         window.addEventListener('resize', resize);
-        
+
         class Node3D {
             constructor() {
                 // Posicionamiento esférico
                 const theta = Math.random() * Math.PI * 2; // Ángulo plano
                 const phi = Math.acos((Math.random() * 2) - 1); // Ángulo de elevación
-                
+
                 // Convertir coordenadas esféricas a cartesianas 3D
                 this.x = GLOBE_RADIUS * Math.sin(phi) * Math.cos(theta);
                 this.y = GLOBE_RADIUS * Math.sin(phi) * Math.sin(theta);
                 this.z = GLOBE_RADIUS * Math.cos(phi);
-                
+
                 // Propiedades visuales
                 this.char = chars[Math.floor(Math.random() * chars.length)];
                 this.font = fonts[Math.floor(Math.random() * fonts.length)];
                 this.fontSizeBase = Math.random() * 8 + 10; 
-                
+
                 // Variables para la animación
                 this.currentX = 0;
                 this.currentY = 0;
@@ -908,7 +871,7 @@
                 // 1. Rotación en eje Y
                 let y1 = this.y * Math.cos(rotationX) - this.z * Math.sin(rotationX);
                 let z1 = this.z * Math.cos(rotationX) + this.y * Math.sin(rotationX);
-                
+
                 // 2. Rotación en eje X
                 let x2 = this.x * Math.cos(rotationY) - z1 * Math.sin(rotationY);
                 let z2 = z1 * Math.cos(rotationY) + this.x * Math.sin(rotationY);
@@ -916,11 +879,11 @@
                 // 3. Proyección 3D a 2D
                 // Factor de escala basado en la profundidad (z)
                 let depth = FOCAL_LENGTH / (FOCAL_LENGTH - z2);
-                
+
                 this.currentX = x2 * depth + width/2;
                 this.currentY = y1 * depth + height/2;
                 this.scale = depth;
-                
+
                 // Guardamos Z transformado para opacidad
                 this.depthZ = z2;
 
@@ -939,17 +902,31 @@
                 }
             }
 
-draw() {
-            if (this.scale < 0) return;
-            const bodyStyles = getComputedStyle(document.body);
-            const opacityVal = parseFloat(bodyStyles.getPropertyValue('--canvas-opacity'));
-            const isLight = document.body.classList.contains('light-mode');
+            draw() {
+                // Solo dibujamos si está "delante" o no muy lejos (para evitar clipping feo)
+                if (this.scale < 0) return;
 
-            ctx.fillStyle = `rgba(${isLight ? '0,0,0' : '255,255,255'}, ${Math.max(0, Math.min((this.scale - 0.5) * opacityVal, 0.4))})`;
-            ctx.font = `${12 * this.scale}px Clash Grotesk`;
-            ctx.textAlign = "center";
-            ctx.fillText(this.char, this.currentX, this.currentY);
+                ctx.save();
+                ctx.translate(this.currentX, this.currentY);
+                ctx.scale(this.scale, this.scale);
+
+                ctx.font = `${this.fontSizeBase}px "${this.font}"`;
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+
+                // Opacidad basada en profundidad (Fog effect)
+                // Más atrás = más transparente
+                let alpha = (this.scale - 0.5) * 0.3; // Ajuste fino
+                if (alpha < 0) alpha = 0;
+                if (alpha > 0.15) alpha = 0.15; // Límite máximo (sutil)
+
+                ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+                ctx.fillText(this.char, 0, 0);
+
+                ctx.restore();
+            }
         }
+
         function initNodes() {
             nodes = [];
             const nodeCount = 50; // Cantidad fija para la esfera
@@ -967,7 +944,7 @@ draw() {
 
             // Primero actualizamos posiciones
             nodes.forEach(node => node.update(angleX, angleY));
-            
+
             // Dibujar CONEXIONES (Líneas)
             // Solo conectamos nodos cercanos en el espacio 3D para mantener la estructura
             /* ctx.beginPath();
