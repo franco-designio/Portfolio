@@ -1,5 +1,4 @@
-Combo cards
-
+Human Factors Portfolio index.html
 
 <!DOCTYPE html>
 <html lang="en">
@@ -176,55 +175,6 @@ Combo cards
 
         /* Utility */
         .hover-trigger { cursor: none; } 
-
-.snapshot-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1px;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 1rem;
-    overflow: hidden;
-}
-.snapshot-cell {
-    background: #0a0a0a;
-    padding: 1.25rem 1.5rem;
-}
-.snapshot-label {
-    font-size: 9px;
-    font-family: monospace;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: #FF4D00;
-    margin-bottom: 0.75rem;
-    display: block;
-}
-.snapshot-tag {
-    display: inline-block;
-    font-size: 10px;
-    padding: 2px 8px;
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 999px;
-    color: #a3a3a3;
-    margin: 2px 2px 2px 0;
-}
-.snapshot-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
-    font-size: 11px;
-    color: #a3a3a3;
-    line-height: 1.5;
-}
-.snapshot-num {
-    color: #FF4D00;
-    font-family: monospace;
-    font-size: 10px;
-    flex-shrink: 0;
-    margin-top: 2px;
-}
-
     </style>
 </head>
 <body class="selection:bg-orange-600 selection:text-white">
@@ -578,48 +528,15 @@ Combo cards
                         </div>
                     `;
                     comboCard = `
-                        <div class="scroll-card max-w-5xl w-full self-start bg-neutral-950 rounded-3xl border border-white/5 shadow-2xl overflow-hidden">
-                            <div class="grid md:grid-cols-2 gap-0">
-                                <div class="p-8 flex flex-col justify-between gap-8">
-                                    <div>
-                                        <h4 class="text-2xl text-white font-bold mb-4">Design Approach</h4>
-                                        <ul class="space-y-4 text-neutral-400">
-                                            <li class="flex items-start gap-3"><span class="text-orange-500 mt-1 font-mono text-xs">01</span> Transparent chip chambers for optical sensing—visible tissue monitoring without obstruction</li>
-                                            <li class="flex items-start gap-3"><span class="text-orange-500 mt-1 font-mono text-xs">02</span> Modular base design allows simultaneous testing of multiple organ models</li>
-                                            <li class="flex items-start gap-3"><span class="text-orange-500 mt-1 font-mono text-xs">03</span> Tubing routed to minimize tangling during chip loading and sample extraction</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="relative overflow-hidden min-h-[280px]">
-                                    <img src="img/cormeum-cover2.png" class="w-full h-full object-cover">
-                                </div>
-                            </div>
-                            <div class="p-8 border-t border-white/5">
-                                <span class="text-[9px] font-mono tracking-[0.2em] uppercase text-orange-500 mb-4 block">Project Snapshot</span>
-                                <div class="snapshot-grid">
-                                    <div class="snapshot-cell">
-                                        <span class="snapshot-label">Tools Used</span>
-                                        <div>
-                                            <span class="snapshot-tag">Figma</span>
-                                            <span class="snapshot-tag">SolidWorks</span>
-                                            <span class="snapshot-tag">Adobe Suite</span>
-                                            <span class="snapshot-tag">Notion</span>
-                                            <span class="snapshot-tag">Arduino IDE</span>
-                                        </div>
-                                    </div>
-                                    <div class="snapshot-cell">
-                                        <span class="snapshot-label">Methodology</span>
-                                        <div class="snapshot-item"><span class="snapshot-num">01</span><span>Human Factors & IEC 62366 compliance for medical UI safety</span></div>
-                                        <div class="snapshot-item"><span class="snapshot-num">02</span><span>Contextual inquiry with biomedical researchers to map real lab workflows</span></div>
-                                        <div class="snapshot-item"><span class="snapshot-num">03</span><span>Iterative hardware-software co-design with embedded constraint mapping</span></div>
-                                    </div>
-                                    <div class="snapshot-cell">
-                                        <span class="snapshot-label">Outcomes</span>
-                                        <div class="snapshot-item"><span class="snapshot-num">01</span><span>Embedded hardware–UI system reduced handling errors in live experiments.</span></div>
-                                        <div class="snapshot-item"><span class="snapshot-num">02</span><span>Unified interaction flows cut handover missteps when different teams shared the device.</span></div>
-                                        <div class="snapshot-item"><span class="snapshot-num">03</span><span>Modular UI system scalable to additional organ-chip configurations</span></div>
-                                    </div>
-                                </div>
+                        <div class="scroll-card max-w-5xl w-full self-start grid md:grid-cols-2 gap-8 bg-neutral-950 p-8 rounded-3xl border border-white/5 shadow-2xl items-center">
+                            <img src="img/cormeum-cover2.png" class="w-full h-full rounded-xl object-cover min-h-[300px]">
+                            <div>
+                               <h4 class="text-2xl text-white font-bold mb-4">Design Approach</h4>
+                                <ul class="space-y-4 text-neutral-400">
+                                    <li class="flex items-start gap-3"><span class="text-orange-500 mt-1">01</span> Transparent chip chambers for optical sensing—visible tissue monitoring without obstruction</li>
+                                    <li class="flex items-start gap-3"><span class="text-orange-500 mt-1">02</span> Modular base design allows simultaneous testing of multiple organ models</li>
+                                    <li class="flex items-start gap-3"><span class="text-orange-500 mt-1">03</span> Tubing routed to minimize tangling during chip loading and sample extraction</li>
+                                </ul>
                             </div>
                         </div>
                     `;
@@ -642,47 +559,15 @@ Combo cards
                         </div>
                     `;
                     comboCard = `
-                        <div class="scroll-card max-w-5xl w-full self-start bg-neutral-950 rounded-3xl border border-white/5 shadow-2xl overflow-hidden">
-                            <div class="grid md:grid-cols-2 gap-0">
-                                <div class="p-8 flex flex-col justify-between gap-8">
-                                    <div>
-                                        <h4 class="text-2xl text-white font-bold mb-4">Core Design Decisions</h4>
-                                        <ul class="space-y-4 text-neutral-400">
-                                            <li class="flex items-start gap-3"><span class="text-orange-500 mt-1 font-mono text-xs">01</span> Modular component approach—teams build independently without breaking visual coherence</li>
-                                            <li class="flex items-start gap-3"><span class="text-orange-500 mt-1 font-mono text-xs">02</span> Visual identity adaptable to web, mobile, and embedded devices</li>
-                                            <li class="flex items-start gap-3"><span class="text-orange-500 mt-1 font-mono text-xs">03</span> Design tokens for color and spacing—technical handoff without ambiguity</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="relative overflow-hidden min-h-[280px]">
-                                    <img src="img/emsadi-cover2.png" class="w-full h-full object-cover">
-                                </div>
-                            </div>
-                            <div class="p-8 border-t border-white/5">
-                                <span class="text-[9px] font-mono tracking-[0.2em] uppercase text-orange-500 mb-4 block">Project Snapshot</span>
-                                <div class="snapshot-grid">
-                                    <div class="snapshot-cell">
-                                        <span class="snapshot-label">Tools Used</span>
-                                        <div>
-                                            <span class="snapshot-tag">Figma</span>
-                                            <span class="snapshot-tag">Adobe Suite</span>
-                                            <span class="snapshot-tag">AI</span>
-                                            <span class="snapshot-tag">Notion</span>
-                                        </div>
-                                    </div>
-                                    <div class="snapshot-cell">
-                                        <span class="snapshot-label">Methodology</span>
-                                        <div class="snapshot-item"><span class="snapshot-num">01</span><span>Design sprint facilitation to align multidisciplinary clinical and engineering teams</span></div>
-                                        <div class="snapshot-item"><span class="snapshot-num">02</span><span>Brand system design with scalable token architecture across platforms</span></div>
-                                        <div class="snapshot-item"><span class="snapshot-num">03</span><span>Stakeholder co-creation workshops for project ideation and validation</span></div>
-                                    </div>
-                                    <div class="snapshot-cell">
-                                        <span class="snapshot-label">Outcomes</span>
-                                        <div class="snapshot-item"><span class="snapshot-num">01</span><span>Shared design system helped teams reach research-ready prototypes faster.</span></div>
-                                        <div class="snapshot-item"><span class="snapshot-num">02</span><span>Cross-functional teams of medics and engineers collaborating with shared design language</span></div>
-                                        <div class="snapshot-item"><span class="snapshot-num">03</span><span>Structured visuals turned research concepts into investor-ready opportunities.</span></div>
-                                    </div>
-                                </div>
+                        <div class="scroll-card max-w-5xl w-full self-start grid md:grid-cols-2 gap-8 bg-neutral-950 p-8 rounded-3xl border border-white/5 shadow-2xl items-center">
+                            <img src="img/emsadi-cover2.png" class="w-full h-full rounded-xl object-cover min-h-[300px]">
+                            <div>
+                                <h4 class="text-2xl text-white font-bold mb-4">Core Design Decisions</h4>
+                                <ul class="space-y-4 text-neutral-400">
+                                    <li class="flex items-start gap-3"><span class="text-orange-500 mt-1">01</span> Modular component approach—teams build independently without breaking visual coherence</li>
+                                    <li class="flex items-start gap-3"><span class="text-orange-500 mt-1">02</span> Visual identity adaptable to web, mobile, and embedded devices</li>
+                                    <li class="flex items-start gap-3"><span class="text-orange-500 mt-1">03</span> Design tokens for color and spacing—technical handoff without ambiguity</li>
+                                </ul>
                             </div>
                         </div>
                     `;
@@ -705,52 +590,19 @@ Combo cards
                         </div>
                     `;
                     comboCard = `
-                        <div class="scroll-card max-w-5xl w-full self-start bg-neutral-950 rounded-3xl border border-white/5 shadow-2xl overflow-hidden">
-                            <div class="grid md:grid-cols-2 gap-0">
-                                <div class="p-8 flex flex-col justify-between gap-8">
-                                    <div>
-                                        <h4 class="text-2xl text-white font-bold mb-4">Educational Framework</h4>
-                                        <ul class="space-y-4 text-neutral-400">
-                                            <li class="flex items-start gap-3"><span class="text-orange-500 mt-1 font-mono text-xs">01</span> Structured curriculum for design workflows</li>
-                                            <li class="flex items-start gap-3"><span class="text-orange-500 mt-1 font-mono text-xs">02</span> Digital tool integration (Figma, Notion, AI)</li>
-                                            <li class="flex items-start gap-3"><span class="text-orange-500 mt-1 font-mono text-xs">03</span> Real-world application for professionals</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="relative overflow-hidden min-h-[280px]">
-                                    <img src="img/designlab-cover2.png" class="w-full h-full object-cover">
-                                </div>
-                            </div>
-                            <div class="p-8 border-t border-white/5">
-                                <span class="text-[9px] font-mono tracking-[0.2em] uppercase text-orange-500 mb-4 block">Project Snapshot</span>
-                                <div class="snapshot-grid">
-                                    <div class="snapshot-cell">
-                                        <span class="snapshot-label">Tools Used</span>
-                                        <div>
-                                            <span class="snapshot-tag">Figma</span>
-                                            <span class="snapshot-tag">Adobe Suite</span>
-                                            <span class="snapshot-tag">AI</span>
-                                            <span class="snapshot-tag">Notion</span>
-                                            <span class="snapshot-tag">Miro</span>
-                                            <span class="snapshot-tag">Loom</span>
-                                        </div>
-                                    </div>
-                                    <div class="snapshot-cell">
-                                        <span class="snapshot-label">Methodology</span>
-                                        <div class="snapshot-item"><span class="snapshot-num">01</span><span>Curriculum design using backward mapping from professional outcomes</span></div>
-                                        <div class="snapshot-item"><span class="snapshot-num">02</span><span>Workshop facilitation with hands-on project sprints and peer critique</span></div>
-                                        <div class="snapshot-item"><span class="snapshot-num">03</span><span>Iterative content refinement based on participant feedback cycles</span></div>
-                                    </div>
-                                    <div class="snapshot-cell">
-                                        <span class="snapshot-label">Outcomes</span>
-                                        <div class="snapshot-item"><span class="snapshot-num">01</span><span>Participants shipped real design artifacts within the first workshop session</span></div>
-                                        <div class="snapshot-item"><span class="snapshot-num">02</span><span>Program adopted by students from engineering, design, medicine, and business backgrounds</span></div>
-                                        <div class="snapshot-item"><span class="snapshot-num">03</span><span>Over 400 students guided to design and ship portfolio-ready projects.</span></div>
-                                    </div>
-                                </div>
+                        <div class="scroll-card max-w-5xl w-full self-start grid md:grid-cols-2 gap-8 bg-neutral-950 p-8 rounded-3xl border border-white/5 shadow-2xl items-center">
+                            <img src="img/designlab-cover2.png" class="w-full h-full rounded-xl object-cover min-h-[300px]">
+                            <div>
+                                <h4 class="text-2xl text-white font-bold mb-4">Educational Framework</h4>
+                                <ul class="space-y-4 text-neutral-400">
+                                    <li class="flex items-start gap-3"><span class="text-orange-500 mt-1">01</span> Structured curriculum for design workflows</li>
+                                    <li class="flex items-start gap-3"><span class="text-orange-500 mt-1">02</span> Digital tool integration (Figma, Notion, AI)</li>
+                                    <li class="flex items-start gap-3"><span class="text-orange-500 mt-1">03</span> Real-world application for professionals</li>
+                                </ul>
                             </div>
                         </div>
                     `;
+                }
 
                 // Image slideshow card with auto-play and dots
                 const imgCard1 = `
