@@ -6,7 +6,6 @@
     <title>Franco Aguilera | Human-Centered Designer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <!-- Fonts -->
     <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@200,300,400,500,600,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 
@@ -158,15 +157,23 @@
 
         .hover-trigger { cursor: none; } 
 
+        /* --- RESPONSIVE SNAPSHOT GRID FIX --- */
         .snapshot-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-columns: 1fr; /* Mobile default */
             gap: 1px;
             background: rgba(255,255,255,0.06);
             border: 1px solid rgba(255,255,255,0.06);
             border-radius: 1rem;
             overflow: hidden;
         }
+        
+        @media (min-width: 768px) {
+            .snapshot-grid {
+                grid-template-columns: 1fr 1fr 1fr; /* Desktop */
+            }
+        }
+
         .snapshot-cell {
             background: #0a0a0a;
             padding: 1.25rem 1.5rem;
@@ -205,14 +212,19 @@
             flex-shrink: 0;
             margin-top: 2px;
         }
+
+        /* --- MOBILE TOUCH & CURSOR FIXES --- */
+        @media (hover: none) and (pointer: coarse) {
+            #custom-cursor { display: none !important; }
+            body, .img-container, .hover-trigger { cursor: auto !important; }
+            .img-container img { filter: none !important; }
+        }
     </style>
 </head>
 <body class="selection:bg-orange-600 selection:text-white">
 
-    <!-- CLAY CURSOR -->
     <div id="custom-cursor"></div>
 
-    <!-- PROJECT OVERLAY -->
     <div id="project-overlay" class="fixed inset-0 z-[100] bg-black/60 opacity-0 pointer-events-none transition-opacity duration-500 backdrop-blur-3xl">
         <button id="close-overlay" class="absolute top-8 right-8 text-white text-xl z-[120] hover:text-orange-500 transition-colors uppercase font-mono tracking-widest cursor-pointer hover-trigger mix-blend-difference bg-black/20 px-4 py-2 rounded-full border border-white/10 backdrop-blur-md">
             Close [X]
@@ -224,10 +236,8 @@
         </div>
     </div>
 
-    <!-- NOISE OVERLAY -->
     <div class="noise"></div>
 
-    <!-- NAVIGATION -->
     <nav class="fixed top-0 left-0 w-full z-40 px-6 py-6 flex justify-between items-start mix-blend-difference text-white">
         <a href="#" class="text-sm font-bold tracking-widest uppercase hover-trigger">
             /FrancoDesignio.
@@ -237,14 +247,12 @@
         </div>
     </nav>
 
-    <!-- FLOATING MENU RIGHT -->
-    <div class="fixed top-1/2 right-6 -translate-y-1/2 z-40 flex flex-col gap-4 items-end mix-blend-difference">
+    <div class="hidden md:flex fixed top-1/2 right-6 -translate-y-1/2 z-40 flex-col gap-4 items-end mix-blend-difference">
         <a href="#work" class="text-xs font-bold uppercase tracking-widest hover:text-orange-500 transition-colors hover-trigger">Work</a>
         <a href="#about" class="text-xs font-bold uppercase tracking-widest hover:text-orange-500 transition-colors hover-trigger">Method</a>
         <a href="#contact" class="text-xs font-bold uppercase tracking-widest hover:text-orange-500 transition-colors hover-trigger">Contact</a>
     </div>
 
-    <!-- HERO SECTION -->
     <header class="min-h-screen flex flex-col justify-center px-4 md:px-12 relative border-b-grid">
         <canvas id="bg-canvas"></canvas>
         <div class="swiss-grid pb-24">
@@ -272,7 +280,6 @@
         </div>
     </header>
 
-    <!-- MARQUEE STRIP -->
     <div class="border-t-grid border-b-grid bg-orange-600 text-black py-3 overflow-hidden">
         <div class="marquee-container">
             <div class="marquee-content text-sm font-bold uppercase tracking-widest">
@@ -283,10 +290,8 @@
         </div>
     </div>
 
-    <!-- WORK SECTION -->
     <main id="work">
 
-        <!-- PROJECT 01: CORMEUM -->
         <article class="swiss-grid md:min-h-screen items-center border-b-grid group">
             <div class="col-span-12 md:col-span-4 p-8 md:p-12 border-r-grid flex flex-col justify-between h-full bg-neutral-950 z-10 transition-colors duration-500 group-hover:bg-neutral-900">
                 <div>
@@ -314,7 +319,6 @@
             </div>
         </article>
 
-        <!-- PROJECT 02: EMSADI -->
         <article class="swiss-grid md:min-h-screen items-center border-b-grid group">
             <div class="col-span-12 md:col-span-4 p-8 md:p-12 border-r-grid flex flex-col justify-between h-full bg-neutral-950 z-10 transition-colors duration-500 group-hover:bg-neutral-900">
                 <div>
@@ -342,7 +346,6 @@
             </div>
         </article>
 
-        <!-- PROJECT 03: DESIGN.LAB -->
         <article class="swiss-grid md:min-h-screen items-center border-b-grid group">
             <div class="col-span-12 md:col-span-4 p-8 md:p-12 border-r-grid flex flex-col justify-between h-full bg-neutral-950 z-10 transition-colors duration-500 group-hover:bg-neutral-900">
                 <div>
@@ -389,7 +392,6 @@
         </div>
     </main>
 
-    <!-- Safety Is Designed -->
     <section id="about" class="py-24 border-t-grid relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-6">
             <div class="swiss-grid border-none">
@@ -494,15 +496,15 @@
             overlayContent.innerHTML = '';
             if (overlayScrollContainer) overlayScrollContainer.scrollTop = 0;
 
-            // ── HERO CARD (shared) ──────────────────────────────────────────
+            // ── HERO CARD (shared - TEXT SIZE FIX) ─────────────────────────
             const heroCard = `
                 <div class="scroll-card w-full max-w-4xl self-center text-center mt-12 mb-12">
-                    <h2 class="text-6xl md:text-9xl serif italic text-orange-500 mb-4 leading-none">${data.title}</h2>
+                    <h2 class="text-5xl md:text-9xl serif italic text-orange-500 mb-4 leading-none">${data.title}</h2>
                     <p class="text-sm font-mono text-neutral-400 uppercase tracking-widest">${data.desc}</p>
                 </div>
             `;
 
-            // ── PROJECT-SPECIFIC CARDS ──────────────────────────────────────
+            // ── PROJECT-SPECIFIC CARDS (PADDING FIXES) ──────────────────────
             let textCard1 = '';
             let textCard2 = '';
             let comboCard = '';
@@ -528,7 +530,7 @@
                 comboCard = `
                     <div class="scroll-card max-w-5xl w-full self-start bg-neutral-950 rounded-3xl border border-white/5 shadow-2xl overflow-hidden">
                         <div class="grid md:grid-cols-2 gap-0">
-                            <div class="p-8 flex flex-col justify-between gap-8">
+                            <div class="p-6 md:p-8 flex flex-col justify-between gap-8">
                                 <div>
                                     <h4 class="text-2xl text-white font-bold mb-4">Design Approach</h4>
                                     <ul class="space-y-4 text-neutral-400">
@@ -542,7 +544,7 @@
                                 <img src="img/cormeum-cover2.png" class="w-full h-full object-cover">
                             </div>
                         </div>
-                        <div class="p-8 border-t border-white/5">
+                        <div class="p-6 md:p-8 border-t border-white/5">
                             <span class="text-[9px] font-mono tracking-[0.2em] uppercase text-orange-500 mb-4 block">Project Snapshot</span>
                             <div class="snapshot-grid">
                                 <div class="snapshot-cell">
@@ -593,7 +595,7 @@
                 comboCard = `
                     <div class="scroll-card max-w-5xl w-full self-start bg-neutral-950 rounded-3xl border border-white/5 shadow-2xl overflow-hidden">
                         <div class="grid md:grid-cols-2 gap-0">
-                            <div class="p-8 flex flex-col justify-between gap-8">
+                            <div class="p-6 md:p-8 flex flex-col justify-between gap-8">
                                 <div>
                                     <h4 class="text-2xl text-white font-bold mb-4">Core Design Decisions</h4>
                                     <ul class="space-y-4 text-neutral-400">
@@ -607,7 +609,7 @@
                                 <img src="img/emsadi-cover2.png" class="w-full h-full object-cover">
                             </div>
                         </div>
-                        <div class="p-8 border-t border-white/5">
+                        <div class="p-6 md:p-8 border-t border-white/5">
                             <span class="text-[9px] font-mono tracking-[0.2em] uppercase text-orange-500 mb-4 block">Project Snapshot</span>
                             <div class="snapshot-grid">
                                 <div class="snapshot-cell">
@@ -657,7 +659,7 @@
                 comboCard = `
                     <div class="scroll-card max-w-5xl w-full self-start bg-neutral-950 rounded-3xl border border-white/5 shadow-2xl overflow-hidden">
                         <div class="grid md:grid-cols-2 gap-0">
-                            <div class="p-8 flex flex-col justify-between gap-8">
+                            <div class="p-6 md:p-8 flex flex-col justify-between gap-8">
                                 <div>
                                     <h4 class="text-2xl text-white font-bold mb-4">Educational Framework</h4>
                                     <ul class="space-y-4 text-neutral-400">
@@ -671,7 +673,7 @@
                                 <img src="img/designlab-cover2.png" class="w-full h-full object-cover">
                             </div>
                         </div>
-                        <div class="p-8 border-t border-white/5">
+                        <div class="p-6 md:p-8 border-t border-white/5">
                             <span class="text-[9px] font-mono tracking-[0.2em] uppercase text-orange-500 mb-4 block">Project Snapshot</span>
                             <div class="snapshot-grid">
                                 <div class="snapshot-cell">
@@ -704,7 +706,6 @@
             }
 
             // ── SHARED: IMAGE SLIDESHOW CARD ────────────────────────────────
-            // (Built here, outside the if/else, using data.images which is always available)
             const imgCard = `
                 <div class="scroll-card max-w-4xl w-full self-end bg-neutral-950 p-2 rounded-3xl border border-white/5 shadow-2xl">
                     <div class="relative">
@@ -895,7 +896,7 @@
         });
 
         const chars = ['A', 'a', 'B', 'b', 'X', 'Y', 'Z', '0', '1', 'f', 'i'];
-        const fonts = ['Instrument Serif'];
+        const fonts = ['Instrument Serif', 'Clash Grotesk'];
 
         function resize() {
             width = canvas.width = window.innerWidth;
@@ -963,6 +964,15 @@
         }
 
         function animateCanvas() {
+            // --- MOBILE PERFORMANCE FIX ---
+            if (window.innerWidth < 768) {
+                // Draw it once statically so it still looks good, then cancel continuous animation loop
+                ctx.clearRect(0, 0, width, height);
+                nodes.forEach(node => node.update(0, 0));
+                nodes.forEach(node => node.draw());
+                return; 
+            }
+
             ctx.clearRect(0, 0, width, height);
             angleX += 0.000003 + mouse.y;
             angleY += 0.000003 + mouse.x;
